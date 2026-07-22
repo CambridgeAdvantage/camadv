@@ -141,13 +141,16 @@ h1 em{font-style:italic;color:var(--gold)}
 .faq-item.open .faq-toggle{transform:rotate(45deg)}
 
 /* ── CTA ── */
-#get-started{padding:5rem 4rem;background:#222222}
+#get-started{padding:2.5rem 4rem;background:#222222;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .cta-inner{max-width:1100px;margin:0 auto}
-.cta-banner{border:1px solid var(--border);border-radius:4px;padding:3.5rem 4rem;display:flex;align-items:center;justify-content:space-between;gap:2.5rem;background:var(--navy-card);flex-wrap:wrap}
+.cta-banner{border-radius:4px;padding:3.5rem 4rem 1.8rem;display:flex;align-items:center;justify-content:space-between;gap:2.5rem;background:var(--navy-card);flex-wrap:wrap}
 .cta-banner h3{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:#fff;margin-bottom:.5rem}
 .cta-banner p{font-size:.9rem;color:var(--muted)}
 .guarantee{margin-top:1.2rem;font-size:.78rem;color:var(--gold);display:flex;align-items:center;gap:.5rem}
 .guarantee::before{content:'✓';font-weight:700}
+.guarantee-badge-row{display:flex;align-items:center;gap:1.5rem;margin-top:1.5rem}
+.guarantee-badge-img{width:110px;height:110px;flex-shrink:0}
+.guarantee-badge-text{font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);font-weight:500;line-height:1.5}
 
 /* ── CONTACT ── */
 #contact{background:var(--navy-mid);border-top:1px solid var(--border)}
@@ -331,13 +334,19 @@ footer p{font-size:.78rem;color:var(--muted)}
   <div class="cta-inner">
     <div class="cta-banner">
       <div>
-        <div class="eyebrow" style="margin-bottom:.8rem">Get started</div>
-        <h3>Ready to have your best year ever?</h3>
+        <div style="border-bottom:1px solid var(--border);padding-bottom:.8rem;margin-bottom:1.5rem;">
+          <div class="eyebrow" style="margin-bottom:.5rem">Get started</div>
+          <h3 style="margin-bottom:0;">Ready to have your best year ever?</h3>
+        </div>
         <p>Register today for a FREE online Business Breakthrough Session — a focused, no-obligation conversation about your business and your goals.</p>
         <div class="guarantee">Money-back guarantee on all programs</div>
       </div>
       <div style="display:flex;flex-direction:column;gap:1rem;align-items:flex-start">
         <a class="btn-primary" href="https://calendly.com/camadvantage/breakthrough-session" target="_blank">Book Free Session ↗</a>
+        <div class="guarantee-badge-row">
+          <img src="./assets/money-back-guarantee-badge.png" alt="100% Money-Back Guarantee" class="guarantee-badge-img">
+          <div class="guarantee-badge-text">100% Money-Back.<br>3 Months.<br>Zero Risk.</div>
+        </div>
       </div>
     </div>
   </div>
