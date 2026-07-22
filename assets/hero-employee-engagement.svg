@@ -1,0 +1,43 @@
+<svg viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1400" height="700" fill="#131313"/>
+
+  <!-- Orbit rings around a central figure, representing engaged team members -->
+  <circle cx="700" cy="350" r="230" fill="none" stroke="#333333" stroke-width="1" stroke-dasharray="2 6"/>
+  <circle cx="700" cy="350" r="150" fill="none" stroke="#333333" stroke-width="1" stroke-dasharray="2 6"/>
+
+  <!-- Central node -->
+  <circle cx="700" cy="350" r="34" fill="none" stroke="#E8501A" stroke-width="2"/>
+  <circle cx="700" cy="350" r="10" fill="#E8501A"/>
+
+  <!-- Connected team nodes -->
+  <g stroke="#F07840" stroke-width="1.4" opacity="0.75">
+    <line x1="700" y1="350" x2="490" y2="220"/>
+    <line x1="700" y1="350" x2="500" y2="480"/>
+    <line x1="700" y1="350" x2="700" y2="120"/>
+    <line x1="700" y1="350" x2="910" y2="220"/>
+    <line x1="700" y1="350" x2="900" y2="480"/>
+    <line x1="700" y1="350" x2="700" y2="580"/>
+    <line x1="700" y1="350" x2="480" y2="350"/>
+    <line x1="700" y1="350" x2="920" y2="350"/>
+  </g>
+
+  <g fill="#1a1a1a" stroke="#E8501A" stroke-width="1.6">
+    <circle cx="490" cy="220" r="22"/>
+    <circle cx="500" cy="480" r="22"/>
+    <circle cx="700" cy="120" r="22"/>
+    <circle cx="910" cy="220" r="22"/>
+    <circle cx="900" cy="480" r="22"/>
+    <circle cx="700" cy="580" r="22"/>
+    <circle cx="480" cy="350" r="18" opacity="0.6"/>
+    <circle cx="920" cy="350" r="18" opacity="0.6"/>
+  </g>
+
+  <g fill="#F07840">
+    <circle cx="490" cy="220" r="6"/>
+    <circle cx="500" cy="480" r="6"/>
+    <circle cx="700" cy="120" r="6"/>
+    <circle cx="910" cy="220" r="6"/>
+    <circle cx="900" cy="480" r="6"/>
+    <circle cx="700" cy="580" r="6"/>
+  </g>
+</svg>

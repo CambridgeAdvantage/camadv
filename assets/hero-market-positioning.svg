@@ -1,0 +1,44 @@
+<svg viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1400" height="700" fill="#131313"/>
+
+  <!-- Axis lines forming a positioning quadrant -->
+  <g stroke="#444444" stroke-width="1.4">
+    <line x1="500" y1="130" x2="500" y2="570"/>
+    <line x1="500" y1="350" x2="1130" y2="350"/>
+  </g>
+
+  <!-- Axis arrowheads -->
+  <g stroke="#666666" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M488,146 L500,130 L512,146"/>
+    <path d="M1114,336 L1130,350 L1114,364"/>
+  </g>
+
+  <!-- Quadrant grid dividers (dotted) -->
+  <g stroke="#333333" stroke-width="1" stroke-dasharray="2 6">
+    <line x1="500" y1="130" x2="1130" y2="130"/>
+    <line x1="500" y1="570" x2="1130" y2="570"/>
+  </g>
+
+  <!-- Competitor dots scattered -->
+  <g fill="#666666">
+    <circle cx="620" cy="480" r="9"/>
+    <circle cx="700" cy="440" r="7"/>
+    <circle cx="580" cy="250" r="8"/>
+    <circle cx="660" cy="200" r="6"/>
+    <circle cx="800" cy="470" r="7"/>
+    <circle cx="900" cy="230" r="8"/>
+  </g>
+
+  <!-- Cambridge Advantage positioning marker - clearly differentiated -->
+  <circle cx="990" cy="200" r="34" fill="none" stroke="#E8501A" stroke-width="2"/>
+  <circle cx="990" cy="200" r="14" fill="#E8501A"/>
+
+  <!-- Dashed callout line to marker -->
+  <path d="M700,200 L960,200" stroke="#F07840" stroke-width="1.2" stroke-dasharray="4 5" fill="none"/>
+
+  <!-- Diamond icon accents echoing service icons -->
+  <g fill="none" stroke="#E8501A" stroke-width="1.4" opacity="0.5">
+    <rect x="330" y="315" width="26" height="26" transform="rotate(45 343 328)"/>
+    <rect x="1180" y="560" width="20" height="20" transform="rotate(45 1190 570)"/>
+  </g>
+</svg>

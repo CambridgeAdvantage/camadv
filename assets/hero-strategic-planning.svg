@@ -1,0 +1,36 @@
+<svg viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1400" height="700" fill="#131313"/>
+
+  <!-- Baseline -->
+  <line x1="220" y1="560" x2="1180" y2="560" stroke="#333333" stroke-width="1"/>
+
+  <!-- Ascending step path -->
+  <path d="M260,540 L260,480 L470,480 L470,400 L680,400 L680,300 L890,300 L890,210 L1100,210 L1100,150"
+        fill="none" stroke="#E8501A" stroke-width="2" opacity="0.85"/>
+
+  <!-- Milestone markers along the path -->
+  <g>
+    <circle cx="260" cy="480" r="10" fill="none" stroke="#F07840" stroke-width="2"/>
+    <circle cx="470" cy="400" r="10" fill="none" stroke="#F07840" stroke-width="2"/>
+    <circle cx="680" cy="300" r="10" fill="none" stroke="#F07840" stroke-width="2"/>
+    <circle cx="890" cy="210" r="10" fill="none" stroke="#F07840" stroke-width="2"/>
+    <circle cx="1100" cy="150" r="14" fill="#E8501A"/>
+  </g>
+
+  <!-- Step number labels (as plain dashes, no literal numerals to keep it graphic-only) -->
+  <g stroke="#555555" stroke-width="1" stroke-dasharray="1 5">
+    <line x1="260" y1="560" x2="260" y2="480"/>
+    <line x1="470" y1="560" x2="470" y2="400"/>
+    <line x1="680" y1="560" x2="680" y2="300"/>
+    <line x1="890" y1="560" x2="890" y2="210"/>
+    <line x1="1100" y1="560" x2="1100" y2="150"/>
+  </g>
+
+  <!-- Flag/goal marker at summit -->
+  <path d="M1100,150 L1100,90" stroke="#F07840" stroke-width="2"/>
+  <path d="M1100,90 L1150,105 L1100,120 Z" fill="#F07840"/>
+
+  <!-- Faint compass-style rings echoing the brand mark -->
+  <circle cx="330" cy="180" r="46" fill="none" stroke="#333333" stroke-width="1"/>
+  <circle cx="330" cy="180" r="46" fill="none" stroke="#E8501A" stroke-width="1.4" stroke-dasharray="8 220" opacity="0.6"/>
+</svg>

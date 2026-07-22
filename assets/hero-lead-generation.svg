@@ -1,0 +1,51 @@
+<svg viewBox="0 0 1400 700" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fadeGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#E8501A" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#F07840" stop-opacity="0.55"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="700" fill="#131313"/>
+
+  <!-- Scattered source nodes (leads) -->
+  <g stroke="none">
+    <circle cx="180" cy="140" r="7" fill="#888888"/>
+    <circle cx="260" cy="220" r="5" fill="#888888"/>
+    <circle cx="160" cy="300" r="6" fill="#888888"/>
+    <circle cx="240" cy="380" r="5" fill="#888888"/>
+    <circle cx="180" cy="460" r="7" fill="#888888"/>
+    <circle cx="270" cy="520" r="5" fill="#888888"/>
+    <circle cx="150" cy="560" r="6" fill="#888888"/>
+    <circle cx="330" cy="160" r="5" fill="#666666"/>
+    <circle cx="320" cy="450" r="5" fill="#666666"/>
+  </g>
+
+  <!-- Converging funnel lines -->
+  <g fill="none" stroke="url(#fadeGold)" stroke-width="1.5" opacity="0.85">
+    <path d="M180,140 C450,220 650,320 900,350"/>
+    <path d="M260,220 C480,260 660,320 900,350"/>
+    <path d="M160,300 C450,330 660,340 900,350"/>
+    <path d="M240,380 C480,370 660,355 900,350"/>
+    <path d="M180,460 C450,410 650,375 900,350"/>
+    <path d="M270,520 C480,440 660,380 900,350"/>
+    <path d="M150,560 C420,460 650,390 900,350"/>
+    <path d="M330,160 C520,240 680,320 900,350"/>
+    <path d="M320,450 C520,400 680,370 900,350"/>
+  </g>
+
+  <!-- Funnel outline -->
+  <g fill="none" stroke="#E8501A" stroke-width="1.5" opacity="0.55">
+    <path d="M900,230 L1080,230 L980,470 L900,470 Z"/>
+  </g>
+
+  <!-- Central conversion target -->
+  <circle cx="900" cy="350" r="10" fill="#E8501A"/>
+  <circle cx="900" cy="350" r="24" fill="none" stroke="#E8501A" stroke-width="1.5" opacity="0.5"/>
+  <circle cx="900" cy="350" r="42" fill="none" stroke="#E8501A" stroke-width="1" opacity="0.28"/>
+
+  <!-- Output arrow to customer -->
+  <path d="M980,350 L1180,350" stroke="#F07840" stroke-width="2" fill="none"/>
+  <path d="M1160,332 L1180,350 L1160,368" stroke="#F07840" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="1230" cy="350" r="16" fill="none" stroke="#F07840" stroke-width="2"/>
+  <circle cx="1230" cy="350" r="4" fill="#F07840"/>
+</svg>
