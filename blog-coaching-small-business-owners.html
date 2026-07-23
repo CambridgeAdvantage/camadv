@@ -2,8 +2,8 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Blog | Cambridge Advantage</title>
-<meta name="description" content="Business insights from Cambridge Advantage — practical articles on lead generation, employee engagement, market positioning, and strategic planning for owner-led SMEs.">
+<title>How Business Coaching Helps Small Business Owners Grow | Cambridge Advantage</title>
+<meta name="description" content="Discover how business coaching helps small business owners overcome common challenges, sharpen decision-making, and build a more profitable business.">
 <link rel="icon" type="image/png" sizes="64x64" href="./assets/favicon.png">
 <link href="./Cambridge Advantage _ Business Coaching &amp; Consulting_files/css2" rel="stylesheet">
 <style>
@@ -141,7 +141,7 @@ h1 em{font-style:italic;color:var(--gold)}
 .faq-item.open .faq-toggle{transform:rotate(45deg)}
 
 /* ── CTA ── */
-#get-started{padding:2.5rem 4rem;background:#0d0d0d;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+#get-started{padding:2.5rem 4rem;background:#222222;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .cta-inner{max-width:1100px;margin:0 auto}
 .cta-banner{border-radius:4px;padding:3.5rem 4rem 1.8rem;display:flex;align-items:center;justify-content:space-between;gap:2.5rem;background:var(--navy-card);flex-wrap:wrap}
 .cta-banner h3{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:#fff;margin-bottom:.5rem}
@@ -177,7 +177,6 @@ h1 em{font-style:italic;color:var(--gold)}
 
 
 /* ── BLOG ── */
-#blog{background:#2a2a2a;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .blog-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;margin-top:0}
 .blog-card{background:var(--navy-card);border:1px solid var(--border);border-radius:4px;padding:2rem;transition:border-color .2s}
 .blog-card:hover{border-color:var(--gold)}
@@ -274,7 +273,42 @@ footer p{font-size:.78rem;color:var(--muted)}
   .map-card,.map-card svg{min-height:340px}
   .map-caption{left:1rem;right:1rem;bottom:1rem;align-items:flex-start;flex-direction:column}
 }
+
+.post-header{max-width:760px;margin:0 auto;padding:6rem 4rem 1rem;}
+.post-body-wrap{max-width:760px;margin:0 auto;padding:2rem 4rem 4rem;}
+.post-nav{max-width:760px;margin:0 auto;padding:0 4rem 4rem;display:flex;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;border-top:1px solid var(--border);padding-top:2.5rem;margin-top:1rem}
+.post-nav a{font-size:.85rem;color:var(--muted);text-decoration:none;max-width:45%}
+.post-nav a:hover{color:var(--gold)}
+.post-nav .post-nav-label{display:block;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.post-nav .post-nav-next{margin-left:auto;text-align:right}
+.back-to-blog{max-width:760px;margin:0 auto;padding:1.5rem 4rem 0;}
+.back-to-blog a{font-size:.85rem;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:.5rem}
+.back-to-blog a:hover{color:var(--gold)}
+@media (max-width:800px){
+  .post-header,.post-body-wrap,.post-nav,.back-to-blog,.post-hero{padding-left:1.5rem;padding-right:1.5rem}
+}
 </style>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How Business Coaching Helps Small Business Owners Grow",
+  "description": "Discover how business coaching helps small business owners overcome common challenges, sharpen decision-making, and build a more profitable business.",
+  "image": ["https://camadvantage.com/assets/hero-coaching-small-business.svg"],
+  "author": { "@type": "Person", "name": "Arjun Bingipur" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Cambridge Advantage",
+    "logo": { "@type": "ImageObject", "url": "https://camadvantage.com/assets/logo.jpg" }
+  },
+  "datePublished": "2026-07-23",
+  "dateModified": "2026-07-23",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://camadvantage.com/blog-coaching-small-business-owners.html"
+  }
+}
+</script>
 <!-- Google tag (gtag.js) -->
 <script data-cfasync="false" async src="https://www.googletagmanager.com/gtag/js?id=G-D2E8CNH4PN"></script>
 <script data-cfasync="false">
@@ -300,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </head>
 <body>
 
-<!-- ── NAV ── -->
+<!-- NAV -->
 <nav>
   <a href="index.html#home" class="logo-link"><img src="./assets/logo.jpg" alt="Cambridge Advantage" class="logo-img" style="height:130px;width:auto;display:block;"></a>
   <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="toggleMenu(this)"><span></span><span></span><span></span></button>
@@ -317,64 +351,57 @@ document.addEventListener('DOMContentLoaded', function() {
   </ul>
 </nav>
 
-<!-- ── PAGE HEADER ── -->
-<section id="blog-header" style="max-width:1100px;margin:0 auto;padding:6rem 4rem 1rem;">
+<div class="back-to-blog">
+  <a href="blog.html">&larr; Back to Blog</a>
+</div>
+
+<!-- POST HEADER -->
+<section class="post-header">
   <div class="fade-up d1">
-    <div class="eyebrow">Insights</div>
-    <h1 style="font-size:3rem;max-width:700px;">Latest from <em>our</em> blog</h1>
-    <p class="hero-desc" style="max-width:640px;">Practical articles on lead generation, employee engagement, market positioning and strategic planning — written for owner-led SMEs looking to grow profit and build a stronger business.</p>
+    <div class="modal-tag" style="margin-bottom:1.2rem;">Business Coaching</div>
+    <h1 style="font-size:2.4rem;line-height:1.25;max-width:700px;">How Business Coaching Helps Small Business Owners Grow</h1>
+    <div class="modal-meta" style="border-bottom:none;padding-bottom:0;margin-bottom:0;">By <a href="contact.html#bio" style="color:#fff;text-decoration:underline;">Arjun Bingipur</a> · Published July 2026</div>
   </div>
 </section>
 
-<!-- ── BLOG GRID ── -->
-<section id="blog">
-  <div class="section-inner">
-    <div class="section-header">
-      <div>
-        <div class="eyebrow">All Articles</div>
-        <h2>Business insights</h2>
-      </div>
-      
-    </div>
-    <div class="blog-grid">
-      <div class="blog-card">
-        <div class="blog-tag">Business Coaching</div>
-        <h3 class="blog-title">How Business Coaching Helps Small Business Owners Grow</h3>
-        <p class="blog-excerpt">Running a small business often means wearing every hat at once. Discover how business coaching brings structure, accountability, and clarity to the decisions that matter most.</p>
-        <a class="blog-link" href="blog-coaching-small-business-owners.html">Read more →</a>
-      </div>
-      <div class="blog-card">
-        <div class="blog-tag">Sales & Marketing</div>
-        <h3 class="blog-title">Small Business Lead Generation: Why It Matters and How to Get It Right</h3>
-        <p class="blog-excerpt">Growth doesn't stall because the offer is wrong &mdash; it stalls when there's no consistent way for enquiries to reach you. Learn what lead generation actually involves for a small business.</p>
-        <a class="blog-link" href="blog-lead-generation.html">Read more →</a>
-      </div>
-      <div class="blog-card">
-        <div class="blog-tag">People & Culture</div>
-        <h3 class="blog-title">Benefits of Employee Engagement Programs</h3>
-        <p class="blog-excerpt">Your employees are your biggest asset. Learn how a well-designed employee engagement program improves retention, teamwork, productivity and overall business success.</p>
-        <a class="blog-link" href="blog-employee-engagement.html">Read more →</a>
-      </div>
-      <div class="blog-card">
-        <div class="blog-tag">Growth Strategy</div>
-        <h3 class="blog-title">What is Market Positioning and How Important is it in Your Business?</h3>
-        <p class="blog-excerpt">Embracing branding can lift profits significantly. Explore what market positioning is, how to identify your target market, and how to set your business apart from competitors.</p>
-        <a class="blog-link" href="blog-market-positioning.html">Read more →</a>
-      </div>
-      <div class="blog-card">
-        <div class="blog-tag">Business Planning</div>
-        <h3 class="blog-title">How To Make The Most Of Strategic Planning?</h3>
-        <p class="blog-excerpt">A goal needs more than ambition. Learn how strategic planning turns a business vision into clear priorities, practical steps and measurable progress.</p>
-        <a class="blog-link" href="blog-strategic-planning.html">Read more →</a>
-      </div>
-    </div>
+<!-- POST HERO IMAGE -->
+<section class="post-hero" style="max-width:760px;margin:0 auto;padding:0 4rem 2.5rem;">
+  <img src="./assets/hero-coaching-small-business.svg" width="1400" height="700" alt="Business coaching guidance compass illustration" style="width:100%;height:auto;display:block;border:1px solid var(--border);border-radius:4px;">
+</section>
+
+<!-- POST BODY -->
+<section>
+  <div class="post-body-wrap modal-body">
+      <p>Running a small business often means being the person who does everything &mdash; sales, hiring, pricing, planning, and putting out fires, usually all in the same week. Business coaching for small business owners exists to solve exactly this problem: not by adding another task to the list, but by giving you a structured, outside perspective on the decisions that actually move the business forward.</p>
+      <h3>What Does a Business Coach Actually Do?</h3>
+      <p>A good business coach isn't there to tell you what to do &mdash; that's closer to consulting. Coaching is about asking the right questions, holding you accountable to the goals you set, and helping you see blind spots in your own business that are hard to spot from the inside. For an <a href="services.html" style="color:#fff;text-decoration:underline;">owner-led SME</a>, that outside perspective is often the single biggest gap, simply because there's rarely anyone else in the business positioned to challenge your thinking.</p>
+      <h3>Common Challenges Small Business Owners Face</h3>
+      <ul>
+        <li>Wearing too many hats, with no time left for strategic thinking</li>
+        <li>Uncertainty around pricing and whether the business is as profitable as it should be</li>
+        <li>Difficulty delegating, even when the business has outgrown a one-person operation</li>
+        <li>No one to be accountable to for the goals that actually matter</li>
+        <li>A sales process that depends entirely on the owner, with no repeatable system behind it</li>
+      </ul>
+      <p>Most of these challenges don't show up as a single crisis &mdash; they build quietly, month after month, until growth plateaus or profit margins quietly erode.</p>
+      <h3>How Coaching Creates Clarity and Accountability</h3>
+      <p>The value of coaching isn't motivational speeches &mdash; it's structure. A typical coaching relationship involves regular sessions where you review what's actually happening in the business against what you said you'd do last time, identify where things went off track, and agree the next concrete step. Over a few months, this rhythm alone tends to surface exactly where a business is leaking time, money, or focus.</p>
+      <p>This is also where a coach's specific focus matters. Coaching that centres on <a href="how-we-work.html" style="color:#fff;text-decoration:underline;">profitability</a> &mdash; not just growth for its own sake &mdash; tends to produce faster, more measurable results, because every session is anchored to a number you can actually track.</p>
+      <h3>What to Expect from a Coaching Relationship</h3>
+      <p>Most engagements start with a diagnostic conversation &mdash; understanding where the business stands today, what's working, and where the biggest opportunities for low-cost, high-impact change actually are. From there, a good coach works with you to build a plan using tactics that don't require large budgets or new hires, since most small business owners don't have the luxury of either.</p>
+      <h3>Is Business Coaching Right for You?</h3>
+      <p>If you're consistently working long hours without a clear sense of whether the business is actually becoming more profitable, or you find yourself making the same kinds of decisions reactively rather than strategically, coaching is designed exactly for that gap. It won't do the work for you &mdash; but it will make sure the work you're already doing is pointed in the right direction.</p>
   </div>
 </section>
 
-<!-- ── CTA ── -->
+<div class="post-nav">
+  <a href="blog-strategic-planning.html"><span class="post-nav-label">&larr; Previous</span>How To Make The Most Of Strategic Planning?</a>
+  <span></span>
+</div>
+<!-- CTA -->
 <section id="get-started" style="transition: opacity 0.6s, transform 0.6s;">
   <div class="cta-inner">
-    <div class="cta-banner" style="background:transparent;">
+    <div class="cta-banner">
       <div>
         <div style="border-bottom:1px solid var(--border);padding-bottom:.8rem;margin-bottom:1.5rem;">
           <div class="eyebrow" style="margin-bottom:.5rem">Get started</div>
@@ -395,6 +422,8 @@ document.addEventListener('DOMContentLoaded', function() {
 </section>
 
 <!-- ── FOOTER ── -->
+
+<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div>
@@ -405,7 +434,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script>
-// Mobile nav toggle
 function toggleMenu(btn){
   const links=document.querySelector('.nav-links');
   const open=links.classList.toggle('open');
@@ -413,7 +441,6 @@ function toggleMenu(btn){
   btn.setAttribute('aria-expanded',open);
 }
 
-// Smooth scroll for in-page anchors only
 document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
     const target=document.querySelector(a.getAttribute('href'));
@@ -440,6 +467,5 @@ document.querySelectorAll('section').forEach(s=>{
   s.style.transition='opacity .6s ease, transform .6s ease';
 });
 </script>
-
 
 </body></html>
