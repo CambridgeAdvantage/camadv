@@ -274,14 +274,34 @@ footer p{font-size:.78rem;color:var(--muted)}
   .map-card,.map-card svg{min-height:340px}
   .map-caption{left:1rem;right:1rem;bottom:1rem;align-items:flex-start;flex-direction:column}
 }
+
+/* ── COOKIE CONSENT ── */
+#cookie-consent-banner{position:fixed;bottom:0;left:0;right:0;z-index:999;background:#171717;border-top:1px solid var(--border);padding:1.2rem 4rem;display:none;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;font-family:'DM Sans',sans-serif;}
+#cookie-consent-banner.visible{display:flex}
+#cookie-consent-banner p{font-size:.82rem;color:#cfcabf;line-height:1.6;margin:0;max-width:640px}
+#cookie-consent-banner a{color:var(--gold);text-decoration:underline}
+.cookie-consent-actions{display:flex;gap:.8rem;flex-shrink:0}
+.cookie-consent-actions button{font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.04em;padding:.65rem 1.3rem;border-radius:3px;cursor:pointer;border:1px solid var(--border);transition:opacity .2s}
+.cookie-consent-actions button:hover{opacity:.85}
+#cookie-consent-accept{background:var(--gold);color:#fff;border-color:var(--gold)}
+#cookie-consent-reject{background:transparent;color:#cfcabf}
+@media(max-width:640px){#cookie-consent-banner{padding:1.2rem 1.4rem}}
 </style>
-<!-- Google tag (gtag.js) -->
-<script data-cfasync="false" async src="https://www.googletagmanager.com/gtag/js?id=G-D2E8CNH4PN"></script>
+<!-- Google tag (gtag.js) with Consent Mode v2 -->
 <script data-cfasync="false">
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  var storedConsent = localStorage.getItem('cad_cookie_consent');
+  gtag('consent', 'default', {
+    'analytics_storage': storedConsent === 'accepted' ? 'granted' : 'denied',
+    'ad_storage': 'denied',
+    'ad_user_data': 'denied',
+    'ad_personalization': 'denied'
+  });
+</script>
+<script data-cfasync="false" async src="https://www.googletagmanager.com/gtag/js?id=G-D2E8CNH4PN"></script>
+<script data-cfasync="false">
   gtag('js', new Date());
-
   gtag('config', 'G-D2E8CNH4PN');
 </script>
 <script data-cfasync="false">
@@ -445,4 +465,30 @@ document.querySelectorAll('section').forEach(s=>{
 });
 </script>
 
+
+<!-- ── COOKIE CONSENT BANNER ── -->
+<div id="cookie-consent-banner">
+  <p>We use cookies to understand site traffic via Google Analytics. You can accept or decline non-essential cookies. See our <a href="privacy-policy.html">Privacy Policy</a> for details.</p>
+  <div class="cookie-consent-actions">
+    <button id="cookie-consent-reject" type="button">Necessary only</button>
+    <button id="cookie-consent-accept" type="button">Accept</button>
+  </div>
+</div>
+<script data-cfasync="false">
+(function(){
+  var stored = localStorage.getItem('cad_cookie_consent');
+  var banner = document.getElementById('cookie-consent-banner');
+  if(!stored && banner){ banner.classList.add('visible'); }
+  document.getElementById('cookie-consent-accept').addEventListener('click', function(){
+    localStorage.setItem('cad_cookie_consent', 'accepted');
+    if(window.gtag){ gtag('consent', 'update', {'analytics_storage': 'granted'}); }
+    banner.classList.remove('visible');
+  });
+  document.getElementById('cookie-consent-reject').addEventListener('click', function(){
+    localStorage.setItem('cad_cookie_consent', 'rejected');
+    if(window.gtag){ gtag('consent', 'update', {'analytics_storage': 'denied'}); }
+    banner.classList.remove('visible');
+  });
+})();
+</script>
 </body></html>
