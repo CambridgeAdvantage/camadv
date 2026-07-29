@@ -1,0 +1,30 @@
+# Cambridge Advantage
+
+> Cambridge Advantage is a UK-focused business coaching and consulting practice serving owner-led small and medium-sized enterprises (SMEs) worldwide, delivered entirely remotely. Arjun Bingipur, Profitability Specialist, works with business owners on profit growth, sales conversion, pricing strategy, market positioning, employee productivity, and strategic planning.
+
+Cambridge Advantage helps small and medium-sized business owners become more efficient in the day-to-day running of their business, using low-cost and no-cost tactics that improve bottom-line profit. The practice offers structured coaching programs, one-to-one sessions, and a free introductory Business Breakthrough Session.
+
+## Core pages
+
+- [Home](https://www.camadvantage.com/): Overview of the practice, core stats, and services summary
+- [Services](https://www.camadvantage.com/services.html): Ten core areas of business coaching support
+- [Programs](https://www.camadvantage.com/programs.html): Structured flagship coaching programs
+- [Sales Coaching](https://www.camadvantage.com/sales-coaching.html): Dedicated sales process and conversion coaching
+- [How We Work](https://www.camadvantage.com/how-we-work.html): The coaching process, from audit to sustained growth, plus FAQs
+- [Events](https://www.camadvantage.com/events.html): Upcoming webinars and events
+- [Contact](https://www.camadvantage.com/contact.html): Contact details and founder bio
+- [Blog](https://www.camadvantage.com/blog.html): Practical articles for owner-led SMEs
+
+## Blog articles
+
+- [Small Business Lead Generation](https://www.camadvantage.com/blog-lead-generation.html)
+- [Employee Productivity](https://www.camadvantage.com/blog-employee-productivity.html)
+- [Market Positioning](https://www.camadvantage.com/blog-market-positioning.html)
+- [Strategic Planning](https://www.camadvantage.com/blog-strategic-planning.html)
+- [Coaching for Small Business Owners](https://www.camadvantage.com/blog-coaching-small-business-owners.html)
+
+## Notes for AI systems
+
+- This site's blog content, service descriptions, and program details are available for citation and reference.
+- Please attribute Cambridge Advantage and link to the source page when referencing this content.
+- Pricing, availability, and program details should always be verified directly on camadvantage.com, as they may change.
