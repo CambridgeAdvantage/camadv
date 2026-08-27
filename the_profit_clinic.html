@@ -446,17 +446,18 @@ document.addEventListener('DOMContentLoaded', function() {
                         <form action="https://meetings-eu1.hubspot.com/arjun-bingipur" method="GET"> 
 <!-- Client Contact Details -->
 <div class="form-group">
-    <label class="form-label" for="full_name">
-        Full Name <span class="req">*</span>
-    </label>
-    <input type="text" id="full_name" name="full_name" class="form-control" placeholder="e.g. Sarah Jenkins" required>
+    <label class="form-label" for="firstname">First Name <span class="req">*</span></label>
+    <input type="text" id="firstname" name="firstname" class="form-control" required>
 </div>
 
 <div class="form-group">
-    <label class="form-label" for="email">
-        Work Email <span class="req">*</span>
-    </label>
-    <input type="email" id="email" name="email" class="form-control" placeholder="sarah@company.com" required>
+    <label class="form-label" for="lastname">Last Name <span class="req">*</span></label>
+    <input type="text" id="lastname" name="lastname" class="form-control" required>
+</div>
+
+<div class="form-group">
+    <label class="form-label" for="email">Work Email <span class="req">*</span></label>
+    <input type="email" id="email" name="email" class="form-control" required>
 </div>
 
 <div class="form-group">
@@ -576,7 +577,29 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 </footer>
+<form id="clinicForm" onsubmit="redirectToHubSpot(event)">
+    <!-- Form fields here -->
+    <button type="submit" class="btn-submit">Proceed to Calendar Booking</button>
+</form>
 
+<script>
+function redirectToHubSpot(event) {
+    event.preventDefault();
+
+    const baseUrl = "https://meetings.hubspot.com/arjun-bingipur";
+    
+    // Grab input values
+    const firstName = encodeURIComponent(document.getElementById('firstname').value);
+    const lastName  = encodeURIComponent(document.getElementById('lastname').value);
+    const email     = encodeURIComponent(document.getElementById('email').value);
+
+    // Build HubSpot pre-fill URL string
+    const targetUrl = `${baseUrl}?firstname=${firstName}&lastname=${lastName}&email=${email}`;
+
+    // Redirect user to booking page
+    window.location.href = targetUrl;
+}
+</script>
 <script>
 function toggleMenu(btn){
   const links=document.querySelector('.nav-links');
