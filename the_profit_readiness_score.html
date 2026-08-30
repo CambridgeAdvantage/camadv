@@ -167,6 +167,12 @@ h1 em{font-style:italic;color:var(--gold)}
 .skip-link{display:block;text-align:center;margin-top:1rem;font-size:.78rem;color:var(--muted);text-decoration:underline;cursor:pointer}
 .skip-link:hover{color:var(--gold)}
 
+/* ── ZOHO CONTAINER ── */
+#zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms {
+  min-height: 450px;
+  width: 100%;
+}
+
 /* ── RESULTS ── */
 #results-section{display:none;background:#2a2a2a;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 #results-section.show{display:block}
@@ -336,13 +342,13 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </section>
 
-<!-- ── LEAD CAPTURE MODAL WITH NATIVE ZOHO EMBED CONTAINER ── -->
+<!-- ── LEAD CAPTURE MODAL ── -->
 <div class="modal-overlay" id="lead-modal">
   <div class="modal-box">
     <div class="modal-title">Your Diagnosis is Ready</div>
     <div class="modal-sub">Enter your details below to unlock your Profit Readiness Score, custom lever breakdown, and tailored improvement roadmap.</div>
     
-    <!-- JS Native Embed Container (Replaces Iframe) -->
+    <!-- JS Native Embed Container -->
     <div id="zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms"></div>
 
     <a class="skip-link" onclick="displayResults()">Skip to view results on screen →</a>
@@ -646,7 +652,7 @@ function calculateAndOpenModal() {
     });
   }, 100);
 
-  // Load Zoho JS Embed script dynamically with score/bottleneck params appended
+  // Load Zoho Native JS Embed inside target div
   loadZohoFormEmbed(totalScore, priorityLeverTitle);
 
   // Display lead modal
@@ -655,16 +661,19 @@ function calculateAndOpenModal() {
 
 function loadZohoFormEmbed(score, bottleneck) {
   const container = document.getElementById('zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms');
-  container.innerHTML = ''; // Reset container
+  container.innerHTML = ''; // Clear prior instances
 
   const jsUrl = 'https://forms.zohopublic.eu/cambridgeadvantage1/jsperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms' +
     '?score=' + encodeURIComponent(score) +
     '&bottleneck=' + encodeURIComponent(bottleneck) +
     '&zf_rsz_it=1';
 
+  // Inject Script Dynamically
   const script = document.createElement('script');
   script.type = 'text/javascript';
   script.src = jsUrl;
+  script.async = true;
+  
   container.appendChild(script);
 }
 
@@ -675,12 +684,11 @@ function displayResults() {
   resSec.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Global listener for Zoho JS Embed submit events
+// Global listener for Zoho submission
 window.addEventListener('message', function(event) {
-  if (event.data && (
-    event.data.action === 'formSubmitted' || 
-    event.data.type === 'formSubmitted' || 
-    event.data === 'zf_submitted'
+  if (event.data && typeof event.data === 'string' && (
+    event.data.includes('zf_submitted') || 
+    event.data.includes('formSubmitted')
   )) {
     displayResults();
   }
