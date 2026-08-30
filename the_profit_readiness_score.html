@@ -164,6 +164,8 @@ h1 em{font-style:italic;color:var(--gold)}
 .modal-box{background:#1a1a1a;border:1px solid var(--border);border-radius:4px;max-width:550px;width:100%;padding:2rem;position:relative}
 .modal-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:#fff;margin-bottom:.4rem;line-height:1.2}
 .modal-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.6}
+.skip-link{display:block;text-align:center;margin-top:1rem;font-size:.78rem;color:var(--muted);text-decoration:underline;cursor:pointer}
+.skip-link:hover{color:var(--gold)}
 
 /* ── RESULTS ── */
 #results-section{display:none;background:#2a2a2a;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -340,6 +342,7 @@ footer p{font-size:.78rem;color:var(--muted)}
     <div class="modal-title">Your Diagnosis is Ready</div>
     <div class="modal-sub">Enter your details below to unlock your Profit Readiness Score, custom lever breakdown, and tailored improvement roadmap.</div>
     <iframe id="zoho-iframe" aria-label="Profit Readiness Score Lead Form" frameborder="0" style="height:480px;width:100%;border:none;" src=""></iframe>
+    <a class="skip-link" onclick="displayResults()">Skip to view results on screen →</a>
   </div>
 </div>
 
@@ -586,35 +589,11 @@ function moveStep(direction) {
   document.getElementById(`step-${currentStep}`).classList.remove('active');
   currentStep += direction;
   
-  // Reached end of levers: calculate total score & bottleneck, pass parameters to Zoho Forms iframe
   if (currentStep >= levers.length) {
     currentStep = levers.length - 1;
     document.getElementById(`step-${currentStep}`).classList.add('active');
 
-    const scores = levers.map((_, li) => {
-      let s = 0;
-      levers[li].questions.forEach((__, qi) => {
-        const sel = document.querySelector(`input[name="q_${li}_${qi}"]:checked`);
-        if (sel) s += +sel.value;
-      });
-      return s;
-    });
-
-    const totalScore = scores.reduce((a, b) => a + b, 0);
-    const minSc = Math.min(...scores);
-    const minIdx = scores.indexOf(minSc);
-    const priorityLeverTitle = levers[minIdx].title;
-
-    // Set dynamic URL parameters for hidden fields in Zoho
-    const iframe = document.getElementById('zoho-iframe');
-    const queryParams = new URLSearchParams({
-      'score': totalScore,
-      'bottleneck': priorityLeverTitle
-    });
-    iframe.src = `${ZOHO_BASE_URL}?${queryParams.toString()}`;
-
-    // Display modal
-    document.getElementById('lead-modal').classList.add('show');
+    calculateAndOpenModal();
     return;
   }
   
@@ -624,6 +603,72 @@ function moveStep(direction) {
   document.getElementById('prev-btn').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
   document.getElementById('next-btn').textContent = currentStep === levers.length - 1 ? 'Calculate My Score →' : 'Next Lever →';
 }
+
+function calculateAndOpenModal() {
+  const scores = levers.map((_, li) => {
+    let s = 0;
+    levers[li].questions.forEach((__, qi) => {
+      const sel = document.querySelector(`input[name="q_${li}_${qi}"]:checked`);
+      if (sel) s += +sel.value;
+    });
+    return s;
+  });
+
+  const totalScore = scores.reduce((a, b) => a + b, 0);
+  const minSc = Math.min(...scores);
+  const minIdx = scores.indexOf(minSc);
+  const priorityLeverTitle = levers[minIdx].title;
+
+  // Render On-Screen Results UI
+  document.getElementById('res-num').textContent = totalScore;
+  const z = zones.find(zn => totalScore >= zn.min && totalScore <= zn.max) || zones[3];
+  document.getElementById('res-zone').textContent = z.zone;
+  document.getElementById('res-desc').textContent = z.desc;
+
+  document.getElementById('priority-title').textContent = priorityLeverTitle;
+  document.getElementById('priority-desc').textContent = levers[minIdx].lowestDesc;
+
+  const bd = document.getElementById('breakdown');
+  bd.innerHTML = levers.map((l, i) => `
+    <div class="bd-row">
+      <div class="bd-label">${l.title}</div>
+      <div class="bd-track"><div class="bd-fill" id="bdf-${i}"></div></div>
+      <div class="bd-val" id="bdv-${i}">${scores[i]}/15</div>
+    </div>
+  `).join('');
+
+  setTimeout(() => {
+    scores.forEach((s, i) => {
+      const fill = document.getElementById(`bdf-${i}`);
+      if (fill) fill.style.width = `${(s / 15) * 100}%`;
+    });
+  }, 100);
+
+  // Set dynamic URL parameters for hidden fields in Zoho
+  const iframe = document.getElementById('zoho-iframe');
+  const queryParams = new URLSearchParams({
+    'score': totalScore,
+    'bottleneck': priorityLeverTitle
+  });
+  iframe.src = `${ZOHO_BASE_URL}?${queryParams.toString()}`;
+
+  // Display lead modal
+  document.getElementById('lead-modal').classList.add('show');
+}
+
+function displayResults() {
+  document.getElementById('lead-modal').classList.remove('show');
+  const resSec = document.getElementById('results-section');
+  resSec.classList.add('show');
+  resSec.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Automatically reveal results upon Zoho Form submission postMessage event
+window.addEventListener('message', function(event) {
+  if (event.data && (event.data.action === 'formSubmitted' || event.data.type === 'formSubmitted')) {
+    displayResults();
+  }
+});
 
 // Cookie Consent Handling
 (function(){
