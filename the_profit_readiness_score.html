@@ -161,16 +161,9 @@ h1 em{font-style:italic;color:var(--gold)}
 /* ── MODAL ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:1.5rem}
 .modal-overlay.show{display:flex}
-.modal-box{background:#1a1a1a;border:1px solid var(--border);border-radius:4px;max-width:480px;width:100%;padding:3rem;position:relative}
-.modal-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:300;color:#fff;margin-bottom:.6rem;line-height:1.2}
-.modal-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.8rem;line-height:1.7}
-.form-group{margin-bottom:1.2rem;text-align:left}
-.form-group label{display:block;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
-.form-input,.form-select{
-  width:100%;background:var(--navy);border:1px solid var(--border);border-radius:2px;
-  padding:.8rem 1rem;color:#fff;font-family:'DM Sans',sans-serif;font-size:.85rem;outline:none;
-}
-.form-input:focus,.form-select:focus{border-color:var(--gold)}
+.modal-box{background:#1a1a1a;border:1px solid var(--border);border-radius:4px;max-width:550px;width:100%;padding:2rem;position:relative}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:#fff;margin-bottom:.4rem;line-height:1.2}
+.modal-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.6}
 
 /* ── RESULTS ── */
 #results-section{display:none;background:#2a2a2a;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -341,33 +334,12 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </section>
 
-<!-- ── LEAD CAPTURE MODAL ── -->
+<!-- ── LEAD CAPTURE MODAL WITH ZOHO IFRAME ── -->
 <div class="modal-overlay" id="lead-modal">
   <div class="modal-box">
     <div class="modal-title">Your Diagnosis is Ready</div>
     <div class="modal-sub">Enter your details below to unlock your Profit Readiness Score, custom lever breakdown, and tailored improvement roadmap.</div>
-    <form onsubmit="handleLeadSubmit(event)">
-      <div class="form-group">
-        <label>First Name</label>
-        <input type="text" class="form-input" id="lead-name" required placeholder="e.g. David">
-      </div>
-      <div class="form-group">
-        <label>Business Email</label>
-        <input type="email" class="form-input" id="lead-email" required placeholder="david@company.com">
-      </div>
-      <div class="form-group">
-        <label>Current Annual Revenue</label>
-        <select class="form-select" id="lead-revenue" required>
-          <option value="" disabled selected>Select revenue range...</option>
-          <option value="Under £250k">Under £250k</option>
-          <option value="£250k - £500k">£250k - £500k</option>
-          <option value="£500k - £1M">£500k - £1M</option>
-          <option value="£1M - £3M">£1M - £3M</option>
-          <option value="£3M+">£3M+</option>
-        </select>
-      </div>
-      <button type="submit" class="btn-primary" style="width: 100%; margin-top: .5rem;">Unlock Score & Roadmap →</button>
-    </form>
+    <iframe id="zoho-iframe" aria-label="Profit Readiness Score Lead Form" frameborder="0" style="height:480px;width:100%;border:none;" src=""></iframe>
   </div>
 </div>
 
@@ -519,6 +491,7 @@ const zones = [
 ];
 
 let currentStep = 0;
+const ZOHO_BASE_URL = "https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScore/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms";
 
 // Render Multi-Step Audit Interface
 const wrap = document.getElementById('levers-wrap');
@@ -563,10 +536,8 @@ levers.forEach((lever, li) => {
 });
 
 function tick(li, qi) {
-  // Hide error banner when interaction occurs
   document.getElementById('error-banner').classList.remove('show');
   
-  // Remove individual unanswered highlights
   const row = document.getElementById(`row_${li}_${qi}`);
   if(row) row.classList.remove('unanswered');
 
@@ -601,7 +572,6 @@ function validateCurrentStep() {
 function moveStep(direction) {
   const errorBanner = document.getElementById('error-banner');
 
-  // Check validation if trying to advance forward
   if (direction > 0) {
     const isStepValid = validateCurrentStep();
     if (!isStepValid) {
@@ -616,9 +586,36 @@ function moveStep(direction) {
   document.getElementById(`step-${currentStep}`).classList.remove('active');
   currentStep += direction;
   
+  // Reached end of levers: calculate total score & bottleneck, pass parameters to Zoho Forms iframe
   if (currentStep >= levers.length) {
-    document.getElementById('lead-modal').classList.add('show');
     currentStep = levers.length - 1;
+    document.getElementById(`step-${currentStep}`).classList.add('active');
+
+    const scores = levers.map((_, li) => {
+      let s = 0;
+      levers[li].questions.forEach((__, qi) => {
+        const sel = document.querySelector(`input[name="q_${li}_${qi}"]:checked`);
+        if (sel) s += +sel.value;
+      });
+      return s;
+    });
+
+    const totalScore = scores.reduce((a, b) => a + b, 0);
+    const minSc = Math.min(...scores);
+    const minIdx = scores.indexOf(minSc);
+    const priorityLeverTitle = levers[minIdx].title;
+
+    // Set dynamic URL parameters for hidden fields in Zoho
+    const iframe = document.getElementById('zoho-iframe');
+    const queryParams = new URLSearchParams({
+      'score': totalScore,
+      'bottleneck': priorityLeverTitle
+    });
+    iframe.src = `${ZOHO_BASE_URL}?${queryParams.toString()}`;
+
+    // Display modal
+    document.getElementById('lead-modal').classList.add('show');
+    return;
   }
   
   document.getElementById(`step-${currentStep}`).classList.add('active');
@@ -626,57 +623,6 @@ function moveStep(direction) {
   
   document.getElementById('prev-btn').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
   document.getElementById('next-btn').textContent = currentStep === levers.length - 1 ? 'Calculate My Score →' : 'Next Lever →';
-}
-
-function handleLeadSubmit(event) {
-  event.preventDefault();
-  document.getElementById('lead-modal').classList.remove('show');
-  
-  const scores = levers.map((_, li) => {
-    let s = 0;
-    levers[li].questions.forEach((__, qi) => {
-      const sel = document.querySelector(`input[name="q_${li}_${qi}"]:checked`);
-      if (sel) s += +sel.value;
-    });
-    return s;
-  });
-  
-  const total = scores.reduce((a,b) => a+b, 0);
-  document.getElementById('res-num').textContent = total;
-  
-  const zone = zones.find(z => total >= z.min && total <= z.max) || zones[zones.length-1];
-  document.getElementById('res-zone').textContent = zone.zone;
-  document.getElementById('res-desc').textContent = zone.desc;
-
-  const bd = document.getElementById('breakdown');
-  bd.innerHTML = '';
-  scores.forEach((sc, i) => {
-    const pct = (sc/15)*100;
-    const col = pct >= 67 ? '#E8501A' : pct >= 47 ? '#F07840' : '#888888';
-    const row = document.createElement('div');
-    row.className = 'bd-row';
-    row.innerHTML = `
-      <div class="bd-label">${levers[i].title}</div>
-      <div class="bd-track"><div class="bd-fill" id="bf-${i}" style="background:${col}"></div></div>
-      <div class="bd-val" style="color:${col}">${sc}/15</div>
-    `;
-    bd.appendChild(row);
-    setTimeout(() => { document.getElementById(`bf-${i}`).style.width = pct+'%'; }, 200 + i*80);
-  });
-
-  const minSc = Math.min(...scores);
-  const minIdx = scores.indexOf(minSc);
-  const priorityLever = levers[minIdx];
-  
-  document.getElementById('priority-title').textContent = `Lever ${priorityLever.num} — ${priorityLever.title}`;
-  document.getElementById('priority-desc').textContent = priorityLever.lowestDesc;
-  
-  const name = encodeURIComponent(document.getElementById('lead-name').value);
-  const email = encodeURIComponent(document.getElementById('lead-email').value);
-  document.getElementById('calendly-btn').href = `https://calendly.com/camadvantage/breakthrough-session?name=${name}&email=${email}&a1=${encodeURIComponent(priorityLever.title)}`;
-
-  document.getElementById('results-section').classList.add('show');
-  document.getElementById('results-section').scrollIntoView({behavior:'smooth'});
 }
 
 // Cookie Consent Handling
