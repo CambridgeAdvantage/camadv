@@ -167,17 +167,6 @@ h1 em{font-style:italic;color:var(--gold)}
 .skip-link{display:block;text-align:center;margin-top:1rem;font-size:.78rem;color:var(--muted);text-decoration:underline;cursor:pointer}
 .skip-link:hover{color:var(--gold)}
 
-/* ── ZOHO CONTAINER ── */
-#zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms {
-  min-height: 500px;
-  width: 100%;
-}
-#zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms iframe {
-  width: 100%;
-  height: 500px;
-  border: none;
-}
-
 /* ── RESULTS ── */
 #results-section{display:none;background:#2a2a2a;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 #results-section.show{display:block}
@@ -353,8 +342,27 @@ footer p{font-size:.78rem;color:var(--muted)}
     <div class="modal-title">Your Diagnosis is Ready</div>
     <div class="modal-sub">Enter your details below to unlock your Profit Readiness Score, custom lever breakdown, and tailored improvement roadmap.</div>
     
-    <!-- Direct iFrame Zoho Embed Container -->
-    <div id="zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms"></div>
+    <!-- Native HTML Zoho Form Lead Capture -->
+    <form id="native-lead-form" action="https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScorecard/htmlperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+      
+      <!-- Hidden fields to pass diagnostic parameters -->
+      <input type="hidden" name="SingleLine" id="zoho_score_field" value="">
+      <input type="hidden" name="SingleLine1" id="zoho_bottleneck_field" value="">
+
+      <div style="margin-bottom: 1rem; text-align: left;">
+        <label style="display:block; font-size:.8rem; color:var(--muted); margin-bottom:.4rem;">Full Name *</label>
+        <input type="text" name="SingleLine2" required placeholder="John Doe" style="width:100%; padding:.75rem; background:#0d0d0d; border:1px solid var(--border); color:#fff; border-radius:3px; box-sizing: border-box;">
+      </div>
+
+      <div style="margin-bottom: 1.5rem; text-align: left;">
+        <label style="display:block; font-size:.8rem; color:var(--muted); margin-bottom:.4rem;">Email Address *</label>
+        <input type="email" name="Email" required placeholder="john@example.com" style="width:100%; padding:.75rem; background:#0d0d0d; border:1px solid var(--border); color:#fff; border-radius:3px; box-sizing: border-box;">
+      </div>
+
+      <button type="submit" class="btn-primary" style="width:100%; text-align:center; padding: .85rem; cursor: pointer;">
+        Unlock Diagnostic Results →
+      </button>
+    </form>
 
     <a class="skip-link" onclick="displayResults()">Skip to view results on screen →</a>
   </div>
@@ -632,7 +640,11 @@ function calculateAndOpenModal() {
   const minIdx = scores.indexOf(minSc);
   const priorityLeverTitle = levers[minIdx].title;
 
-  // Render On-Screen Results UI
+  // 1. Inject values into hidden inputs for native form submission
+  document.getElementById('zoho_score_field').value = totalScore;
+  document.getElementById('zoho_bottleneck_field').value = priorityLeverTitle;
+
+  // 2. Render background results section
   document.getElementById('res-num').textContent = totalScore;
   const z = zones.find(zn => totalScore >= zn.min && totalScore <= zn.max) || zones[3];
   document.getElementById('res-zone').textContent = z.zone;
@@ -657,21 +669,8 @@ function calculateAndOpenModal() {
     });
   }, 100);
 
-  // Load Zoho via direct iFrame to guarantee rendering
-  loadZohoFormEmbed(totalScore, priorityLeverTitle);
-
-  // Display lead modal
+  // 3. Show lead modal
   document.getElementById('lead-modal').classList.add('show');
-}
-
-function loadZohoFormEmbed(score, bottleneck) {
-  const container = document.getElementById('zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms');
-  
-  const iframeUrl = 'https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScorecard/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms' +
-    '?score=' + encodeURIComponent(score) +
-    '&bottleneck=' + encodeURIComponent(bottleneck);
-
-  container.innerHTML = `<iframe src="${iframeUrl}" title="Lead Capture Form" scrolling="no"></iframe>`;
 }
 
 function displayResults() {
@@ -681,14 +680,9 @@ function displayResults() {
   resSec.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Global listener for Zoho submission
-window.addEventListener('message', function(event) {
-  if (event.data && typeof event.data === 'string' && (
-    event.data.includes('zf_submitted') || 
-    event.data.includes('formSubmitted')
-  )) {
-    displayResults();
-  }
+// Handle Form Submit Event
+document.getElementById('native-lead-form').addEventListener('submit', function() {
+  displayResults();
 });
 
 // Cookie Consent Handling
