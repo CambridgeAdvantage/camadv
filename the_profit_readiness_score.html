@@ -24,7 +24,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:#e8e4dc;overf
 
 /* ── NAV ── */
 nav{
-  display:flex;justify-content:space-between;align-items:center;
+  display:flex;justify-space-between;align-items:center;
   padding:1.3rem 4rem;
   border-bottom:1px solid var(--border);
   position:sticky;top:0;
@@ -422,7 +422,7 @@ footer p{font-size:.78rem;color:var(--muted)}
   (function() {
     try {
       var f = document.createElement("iframe");
-      f.src = 'https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScorecard/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms?zf_rsz_se=1';
+      f.src = 'https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScore/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms?zf_rsz_se=1';
       f.style.border = "none";
       f.style.height = "380px";
       f.style.width = "100%";
@@ -659,10 +659,10 @@ function calculateAndOpenModal() {
   const minIdx = scores.indexOf(minSc);
   const priorityLeverTitle = levers[minIdx].title;
 
-  // Pass dynamic values into Zoho embedded iframe safely using URLSearchParams
+  // Pass dynamic values into Zoho embedded iframe safely using URLSearchParams with corrected URL
   const zohoIframe = document.querySelector("#zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms iframe");
   if (zohoIframe) {
-    const baseUrl = 'https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScorecard/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms';
+    const baseUrl = 'https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScore/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms';
     
     const params = new URLSearchParams({
       'zf_rsz_se': '1',
