@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +24,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:#e8e4dc;overf
 
 /* ── NAV ── */
 nav{
-  display:flex;justify-space-between;align-items:center;
+  display:flex;justify-content:space-between;align-items:center;
   padding:1.3rem 4rem;
   border-bottom:1px solid var(--border);
   position:sticky;top:0;
@@ -201,7 +200,7 @@ h1 em{font-style:italic;color:var(--gold)}
 /* ── CTA ── */
 #get-started{padding:2.5rem 4rem;background:#0d0d0d;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .cta-inner{max-width:1100px;margin:0 auto}
-.cta-banner{border-radius:4px;padding:3.5rem 4rem 1.8rem;display:flex;align-items:center;justify-content:space-between;gap:2.5rem;background:transparent;flex-wrap:wrap}
+.cta-banner{border-radius:4px;padding:3.5rem 4rem 1.8rem;display:flex;align-items:center;justify-space-between;gap:2.5rem;background:transparent;flex-wrap:wrap}
 .cta-banner h3{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:#fff;margin-bottom:.5rem}
 .cta-banner p{font-size:.9rem;color:var(--muted)}
 .guarantee{margin-top:1.2rem;font-size:.78rem;color:var(--gold);display:flex;align-items:center;gap:.5rem}
@@ -660,11 +659,18 @@ function calculateAndOpenModal() {
   const minIdx = scores.indexOf(minSc);
   const priorityLeverTitle = levers[minIdx].title;
 
-  // Pass dynamic values into Zoho embedded iframe URL parameters
+  // Pass dynamic values into Zoho embedded iframe safely using URLSearchParams
   const zohoIframe = document.querySelector("#zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms iframe");
   if (zohoIframe) {
-    const baseUrl = 'https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScorecard/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms?zf_rsz_se=1';
-    zohoIframe.src = `${baseUrl}&SingleLine=${encodeURIComponent(totalScore)}&SingleLine1=${encodeURIComponent(priorityLeverTitle)}`;
+    const baseUrl = 'https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScorecard/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms';
+    
+    const params = new URLSearchParams({
+      'zf_rsz_se': '1',
+      'SingleLine': String(totalScore),
+      'SingleLine1': priorityLeverTitle
+    });
+
+    zohoIframe.src = `${baseUrl}?${params.toString()}`;
   }
 
   // Render on-screen score UI
