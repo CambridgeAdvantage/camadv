@@ -79,6 +79,42 @@ h1 em{font-style:italic;color:var(--gold)}
 }
 .instructions strong{color:#fff;font-weight:500}
 
+/* ON-SCREEN ERROR BANNER */
+.error-banner {
+  display: none;
+  background: rgba(232, 80, 26, 0.12);
+  border: 1px solid var(--gold);
+  border-left: 4px solid var(--gold);
+  color: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  font-size: .88rem;
+  font-weight: 500;
+  align-items: center;
+  gap: .8rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.error-banner.show { display: flex; }
+.error-icon {
+  background: var(--gold);
+  color: var(--navy);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: .8rem;
+  flex-shrink: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 /* Progress Tracker */
 .progress-wrap{margin-bottom:2rem}
 .progress-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.6rem}
@@ -103,7 +139,8 @@ h1 em{font-style:italic;color:var(--gold)}
 .q-col-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .q-col-label.right{text-align:right}
 
-.q-row{display:grid;grid-template-columns:30px 1fr 220px;align-items:center;gap:1rem;padding:1.4rem 2rem;border-bottom:1px solid var(--border-soft)}
+.q-row{display:grid;grid-template-columns:30px 1fr 220px;align-items:center;gap:1rem;padding:1.4rem 2rem;border-bottom:1px solid var(--border-soft);transition:background 0.2s}
+.q-row.unanswered{background:rgba(232,80,26,0.12); border-left: 2px solid var(--gold);}
 .q-row:last-of-type{border-bottom:none}
 .q-n{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold)}
 .q-text{font-size:.88rem;color:#e8e4dc;line-height:1.6}
@@ -274,7 +311,13 @@ footer p{font-size:.78rem;color:var(--muted)}
   <div class="section-inner">
     
     <div class="instructions">
-      <strong>Executive Context:</strong> Rate each statement from 1 (Strongly Disagree) to 5 (Strongly Agree) based on current operational realities rather than future aspirations.
+      <strong>Executive Context:</strong> Rate each statement from 1 (Strongly Disagree) to 5 (Strongly Agree) based on current operational realities rather than future aspirations. All statements are required to proceed.
+    </div>
+
+    <!-- On-Screen Notification Banner -->
+    <div class="error-banner" id="error-banner">
+      <div class="error-icon">!</div>
+      <div>Please select a rating for all highlighted questions below before moving to the next lever.</div>
     </div>
 
     <!-- Progress Bar -->
@@ -501,13 +544,13 @@ levers.forEach((lever, li) => {
         <div class="q-col-label right">1 &nbsp; 2 &nbsp; 3 &nbsp; 4 &nbsp; 5</div>
       </div>
       ${lever.questions.map((q, qi) => `
-        <div class="q-row">
+        <div class="q-row" id="row_${li}_${qi}">
           <div class="q-n">${qi+1}</div>
           <div class="q-text">${q}</div>
           <div class="radio-scale">
             ${[1,2,3,4,5].map(v => `
               <label class="r-opt">
-                <input type="radio" name="q_${li}_${qi}" value="${v}" onchange="tick()">
+                <input type="radio" name="q_${li}_${qi}" value="${v}" onchange="tick(${li}, ${qi})">
                 <div class="r-circle">${v}</div>
               </label>
             `).join('')}
@@ -519,18 +562,57 @@ levers.forEach((lever, li) => {
   wrap.appendChild(stepDiv);
 });
 
-function tick() {
+function tick(li, qi) {
+  // Hide error banner when interaction occurs
+  document.getElementById('error-banner').classList.remove('show');
+  
+  // Remove individual unanswered highlights
+  const row = document.getElementById(`row_${li}_${qi}`);
+  if(row) row.classList.remove('unanswered');
+
   let answered = 0;
-  levers.forEach((lever, li) => {
-    lever.questions.forEach((_, qi) => {
-      if (document.querySelector(`input[name="q_${li}_${qi}"]:checked`)) answered++;
+  levers.forEach((lever, lIdx) => {
+    lever.questions.forEach((_, qIdx) => {
+      if (document.querySelector(`input[name="q_${lIdx}_${qIdx}"]:checked`)) answered++;
     });
   });
   document.getElementById('prog-count').textContent = `${answered} of 18 answered`;
   document.getElementById('prog-bar').style.width = `${(answered/18)*100}%`;
 }
 
+function validateCurrentStep() {
+  const currentLever = levers[currentStep];
+  let allAnswered = true;
+
+  currentLever.questions.forEach((_, qi) => {
+    const checked = document.querySelector(`input[name="q_${currentStep}_${qi}"]:checked`);
+    const row = document.getElementById(`row_${currentStep}_${qi}`);
+    if (!checked) {
+      allAnswered = false;
+      if (row) row.classList.add('unanswered');
+    } else {
+      if (row) row.classList.remove('unanswered');
+    }
+  });
+
+  return allAnswered;
+}
+
 function moveStep(direction) {
+  const errorBanner = document.getElementById('error-banner');
+
+  // Check validation if trying to advance forward
+  if (direction > 0) {
+    const isStepValid = validateCurrentStep();
+    if (!isStepValid) {
+      errorBanner.classList.add('show');
+      errorBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+  }
+
+  errorBanner.classList.remove('show');
+
   document.getElementById(`step-${currentStep}`).classList.remove('active');
   currentStep += direction;
   
