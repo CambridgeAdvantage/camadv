@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +25,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:#e8e4dc;overf
 
 /* ── NAV ── */
 nav{
-  display:flex;justify-content:space-between;align-items:center;
+  display:flex;justify-space-between;align-items:center;
   padding:1.3rem 4rem;
   border-bottom:1px solid var(--border);
   position:sticky;top:0;
@@ -342,30 +343,8 @@ footer p{font-size:.78rem;color:var(--muted)}
     <div class="modal-title">Your Diagnosis is Ready</div>
     <div class="modal-sub">Enter your details below to unlock your Profit Readiness Score, custom lever breakdown, and tailored improvement roadmap.</div>
     
-    <!-- Hidden iframe target prevents redirect -->
-    <iframe name="zoho-target" id="zoho-target" style="display:none;"></iframe>
-
-    <!-- Native HTML Form submitting to hidden target frame -->
-    <form id="native-lead-form" action="https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScorecard/htmlperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms" method="POST" target="zoho-target" accept-charset="UTF-8" enctype="multipart/form-data">
-      
-      <!-- Hidden fields to pass diagnostic parameters -->
-      <input type="hidden" name="SingleLine" id="zoho_score_field" value="">
-      <input type="hidden" name="SingleLine1" id="zoho_bottleneck_field" value="">
-
-      <div style="margin-bottom: 1rem; text-align: left;">
-        <label style="display:block; font-size:.8rem; color:var(--muted); margin-bottom:.4rem;">Full Name *</label>
-        <input type="text" name="SingleLine2" required placeholder="John Doe" style="width:100%; padding:.75rem; background:#0d0d0d; border:1px solid var(--border); color:#fff; border-radius:3px; box-sizing: border-box;">
-      </div>
-
-      <div style="margin-bottom: 1.5rem; text-align: left;">
-        <label style="display:block; font-size:.8rem; color:var(--muted); margin-bottom:.4rem;">Email Address *</label>
-        <input type="email" name="Email" required placeholder="john@example.com" style="width:100%; padding:.75rem; background:#0d0d0d; border:1px solid var(--border); color:#fff; border-radius:3px; box-sizing: border-box;">
-      </div>
-
-      <button type="submit" class="btn-primary" style="width:100%; text-align:center; padding: .85rem; cursor: pointer;">
-        Unlock Diagnostic Results →
-      </button>
-    </form>
+    <!-- Zoho Form Container -->
+    <div id="zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms"></div>
 
     <a class="skip-link" onclick="displayResults()">Skip to view results on screen →</a>
   </div>
@@ -438,6 +417,44 @@ footer p{font-size:.78rem;color:var(--muted)}
     <button id="cookie-consent-accept" type="button">Accept</button>
   </div>
 </div>
+
+<!-- ── ZOHO EMBEDDED FORM SCRIPT ── -->
+<script type="text/javascript">
+  (function() {
+    try {
+      var f = document.createElement("iframe");
+      f.src = 'https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScorecard/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms?zf_rsz_se=1';
+      f.style.border = "none";
+      f.style.height = "380px";
+      f.style.width = "100%";
+      f.style.transition = "all 0.5s ease";
+      f.setAttribute("aria-label", 'Profit Readiness Scorecard');
+      
+      var d = document.getElementById("zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms");
+      if (d) { d.appendChild(f); }
+
+      window.addEventListener('message', function (event) {
+        var evntData = event.data;
+        if (evntData && evntData.constructor == String) {
+          var zf_ifrm_data = evntData.split("|");
+          if (zf_ifrm_data.length == 2 || zf_ifrm_data.length == 3) {
+            var zf_perma = zf_ifrm_data[0];
+            var zf_ifrm_ht_part = zf_ifrm_data[1];
+            if (zf_perma == "Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms") {
+              if (zf_ifrm_ht_part.indexOf("px") > -1) {
+                f.style.height = zf_ifrm_ht_part;
+              }
+              // Triggers on submission complete
+              if (zf_ifrm_data.length == 3) {
+                displayResults();
+              }
+            }
+          }
+        }
+      }, false);
+    } catch (e) {}
+  })();
+</script>
 
 <script>
 function toggleMenu(btn){
@@ -643,9 +660,12 @@ function calculateAndOpenModal() {
   const minIdx = scores.indexOf(minSc);
   const priorityLeverTitle = levers[minIdx].title;
 
-  // Inject dynamic score details into hidden form inputs
-  document.getElementById('zoho_score_field').value = totalScore;
-  document.getElementById('zoho_bottleneck_field').value = priorityLeverTitle;
+  // Pass dynamic values into Zoho embedded iframe URL parameters
+  const zohoIframe = document.querySelector("#zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms iframe");
+  if (zohoIframe) {
+    const baseUrl = 'https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScorecard/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms?zf_rsz_se=1';
+    zohoIframe.src = `${baseUrl}&SingleLine=${encodeURIComponent(totalScore)}&SingleLine1=${encodeURIComponent(priorityLeverTitle)}`;
+  }
 
   // Render on-screen score UI
   document.getElementById('res-num').textContent = totalScore;
@@ -682,13 +702,6 @@ function displayResults() {
   resSec.classList.add('show');
   resSec.scrollIntoView({ behavior: 'smooth' });
 }
-
-// Handle Form Submit Event & Reveal Results
-document.getElementById('native-lead-form').addEventListener('submit', function() {
-  setTimeout(function() {
-    displayResults();
-  }, 400);
-});
 
 // Cookie Consent Handling
 (function(){
