@@ -161,7 +161,7 @@ h1 em{font-style:italic;color:var(--gold)}
 /* ── MODAL ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:1.5rem}
 .modal-overlay.show{display:flex}
-.modal-box{background:#1a1a1a;border:1px solid var(--border);border-radius:4px;max-width:550px;width:100%;padding:2rem;position:relative}
+.modal-box{background:#1a1a1a;border:1px solid var(--border);border-radius:4px;max-width:580px;width:100%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative}
 .modal-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:#fff;margin-bottom:.4rem;line-height:1.2}
 .modal-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.6}
 .skip-link{display:block;text-align:center;margin-top:1rem;font-size:.78rem;color:var(--muted);text-decoration:underline;cursor:pointer}
@@ -336,12 +336,15 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </section>
 
-<!-- ── LEAD CAPTURE MODAL WITH ZOHO IFRAME ── -->
+<!-- ── LEAD CAPTURE MODAL WITH NATIVE ZOHO EMBED CONTAINER ── -->
 <div class="modal-overlay" id="lead-modal">
   <div class="modal-box">
     <div class="modal-title">Your Diagnosis is Ready</div>
     <div class="modal-sub">Enter your details below to unlock your Profit Readiness Score, custom lever breakdown, and tailored improvement roadmap.</div>
-    <iframe id="zoho-iframe" aria-label="Profit Readiness Score Lead Form" frameborder="0" style="height:480px;width:100%;border:none;" src=""></iframe>
+    
+    <!-- JS Native Embed Container (Replaces Iframe) -->
+    <div id="zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms"></div>
+
     <a class="skip-link" onclick="displayResults()">Skip to view results on screen →</a>
   </div>
 </div>
@@ -494,7 +497,6 @@ const zones = [
 ];
 
 let currentStep = 0;
-const ZOHO_BASE_URL = "https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScore/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms";
 
 // Render Multi-Step Audit Interface
 const wrap = document.getElementById('levers-wrap');
@@ -644,16 +646,26 @@ function calculateAndOpenModal() {
     });
   }, 100);
 
-  // Set dynamic URL parameters for hidden fields in Zoho
-  const iframe = document.getElementById('zoho-iframe');
-  const queryParams = new URLSearchParams({
-    'score': totalScore,
-    'bottleneck': priorityLeverTitle
-  });
-  iframe.src = `${ZOHO_BASE_URL}?${queryParams.toString()}`;
+  // Load Zoho JS Embed script dynamically with score/bottleneck params appended
+  loadZohoFormEmbed(totalScore, priorityLeverTitle);
 
   // Display lead modal
   document.getElementById('lead-modal').classList.add('show');
+}
+
+function loadZohoFormEmbed(score, bottleneck) {
+  const container = document.getElementById('zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms');
+  container.innerHTML = ''; // Reset container
+
+  const jsUrl = 'https://forms.zohopublic.eu/cambridgeadvantage1/jsperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms' +
+    '?score=' + encodeURIComponent(score) +
+    '&bottleneck=' + encodeURIComponent(bottleneck) +
+    '&zf_rsz_it=1';
+
+  const script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src = jsUrl;
+  container.appendChild(script);
 }
 
 function displayResults() {
@@ -663,9 +675,13 @@ function displayResults() {
   resSec.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Automatically reveal results upon Zoho Form submission postMessage event
+// Global listener for Zoho JS Embed submit events
 window.addEventListener('message', function(event) {
-  if (event.data && (event.data.action === 'formSubmitted' || event.data.type === 'formSubmitted')) {
+  if (event.data && (
+    event.data.action === 'formSubmitted' || 
+    event.data.type === 'formSubmitted' || 
+    event.data === 'zf_submitted'
+  )) {
     displayResults();
   }
 });
