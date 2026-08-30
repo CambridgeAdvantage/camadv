@@ -342,8 +342,11 @@ footer p{font-size:.78rem;color:var(--muted)}
     <div class="modal-title">Your Diagnosis is Ready</div>
     <div class="modal-sub">Enter your details below to unlock your Profit Readiness Score, custom lever breakdown, and tailored improvement roadmap.</div>
     
-    <!-- Native HTML Zoho Form Lead Capture -->
-    <form id="native-lead-form" action="https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScorecard/htmlperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms" method="POST" accept-charset="UTF-8" enctype="multipart/form-data">
+    <!-- Hidden iframe target prevents redirect -->
+    <iframe name="zoho-target" id="zoho-target" style="display:none;"></iframe>
+
+    <!-- Native HTML Form submitting to hidden target frame -->
+    <form id="native-lead-form" action="https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScorecard/htmlperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms" method="POST" target="zoho-target" accept-charset="UTF-8" enctype="multipart/form-data">
       
       <!-- Hidden fields to pass diagnostic parameters -->
       <input type="hidden" name="SingleLine" id="zoho_score_field" value="">
@@ -640,11 +643,11 @@ function calculateAndOpenModal() {
   const minIdx = scores.indexOf(minSc);
   const priorityLeverTitle = levers[minIdx].title;
 
-  // 1. Inject values into hidden inputs for native form submission
+  // Inject dynamic score details into hidden form inputs
   document.getElementById('zoho_score_field').value = totalScore;
   document.getElementById('zoho_bottleneck_field').value = priorityLeverTitle;
 
-  // 2. Render background results section
+  // Render on-screen score UI
   document.getElementById('res-num').textContent = totalScore;
   const z = zones.find(zn => totalScore >= zn.min && totalScore <= zn.max) || zones[3];
   document.getElementById('res-zone').textContent = z.zone;
@@ -669,7 +672,7 @@ function calculateAndOpenModal() {
     });
   }, 100);
 
-  // 3. Show lead modal
+  // Show lead capture modal
   document.getElementById('lead-modal').classList.add('show');
 }
 
@@ -680,9 +683,11 @@ function displayResults() {
   resSec.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Handle Form Submit Event
+// Handle Form Submit Event & Reveal Results
 document.getElementById('native-lead-form').addEventListener('submit', function() {
-  displayResults();
+  setTimeout(function() {
+    displayResults();
+  }, 400);
 });
 
 // Cookie Consent Handling
