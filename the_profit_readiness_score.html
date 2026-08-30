@@ -49,7 +49,7 @@ nav{
 .eyebrow{font-size:.95rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;display:flex;align-items:center;gap:.8rem}
 .eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
 h2{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;color:#fff;line-height:1.25}
-.btn-primary{background:var(--gold);color:var(--navy);padding:.85rem 1.8rem;border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.07em;cursor:pointer;text-transform:uppercase;transition:background .2s;display:inline-block;text-decoration:none}
+.btn-primary{background:var(--gold);color:var(--navy);padding:.85rem 1.8rem;border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;letter-spacing:.07em;cursor:pointer;text-transform:uppercase;transition:background .2s;display:inline-block;text-decoration:none;width:100%;text-align:center}
 .btn-primary:hover{background:var(--gold-light)}
 .btn-outline{background:transparent;color:#e8e4dc;padding:.85rem 1.8rem;border:1px solid var(--border);border-radius:2px;font-family:'DM Sans',sans-serif;font-size:.82rem;letter-spacing:.07em;cursor:pointer;text-transform:uppercase;transition:border-color .2s,color .2s;display:inline-block;text-decoration:none}
 .btn-outline:hover{border-color:var(--gold);color:var(--gold)}
@@ -161,9 +161,14 @@ h1 em{font-style:italic;color:var(--gold)}
 /* ── MODAL ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:1.5rem}
 .modal-overlay.show{display:flex}
-.modal-box{background:#1a1a1a;border:1px solid var(--border);border-radius:4px;max-width:580px;width:100%;max-height:90vh;overflow-y:auto;padding:2rem;position:relative}
+.modal-box{background:#1a1a1a;border:1px solid var(--border);border-radius:4px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:2.2rem;position:relative}
 .modal-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:#fff;margin-bottom:.4rem;line-height:1.2}
-.modal-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.6}
+.modal-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6}
+
+.form-group{margin-bottom:1.2rem}
+.form-group label{display:block;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+.form-group input{width:100%;background:var(--navy);border:1px solid var(--border);border-radius:3px;padding:.8rem 1rem;color:#fff;font-family:'DM Sans',sans-serif;font-size:.9rem}
+.form-group input:focus{outline:none;border-color:var(--gold)}
 
 /* ── RESULTS ── */
 #results-section{display:none;background:#2a2a2a;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -251,7 +256,6 @@ footer p{font-size:.78rem;color:var(--muted)}
 @media(max-width:640px){#cookie-consent-banner{padding:1.2rem 1.4rem}}
 </style>
 
-<!-- Google tag (gtag.js) -->
 <script data-cfasync="false" async src="https://www.googletagmanager.com/gtag/js?id=G-D2E8CNH4PN"></script>
 <script data-cfasync="false">
   window.dataLayer = window.dataLayer || [];
@@ -269,7 +273,6 @@ footer p{font-size:.78rem;color:var(--muted)}
 </head>
 <body>
 
-<!-- ── NAV ── -->
 <nav>
   <a href="index.html#home" class="logo-link"><img src="./assets/logo.jpg" alt="Cambridge Advantage" class="logo-img"></a>
   <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="toggleMenu(this)"><span></span><span></span><span></span></button>
@@ -286,20 +289,18 @@ footer p{font-size:.78rem;color:var(--muted)}
   </ul>
 </nav>
 
-<!-- ── PAGE HEADER ── -->
 <section id="services-header">
   <div>
     <div class="eyebrow">Executive Diagnostic</div>
     <h1>Find the hidden <em>profit bottleneck</em> in your business</h1>
     <p class="hero-desc">In 3 minutes, evaluate your business across 6 core growth levers to identify exact leaks in your pipeline, margins, and sales conversions.</p>
     <div class="btn-row">
-      <button class="btn-primary" onclick="document.getElementById('audit-section').scrollIntoView({behavior:'smooth'})">Calculate Score →</button>
+      <button class="btn-primary" style="width:auto;" onclick="document.getElementById('audit-section').scrollIntoView({behavior:'smooth'})">Calculate Score →</button>
     </div>
     <p class="hero-meta">18 Strategic Indicators &nbsp;·&nbsp; 3-Minute Diagnostic &nbsp;·&nbsp; Immediate Profit Roadmap</p>
   </div>
 </section>
 
-<!-- ── MULTI-STEP AUDIT ── -->
 <section id="audit-section">
   <div class="section-inner">
     
@@ -307,13 +308,11 @@ footer p{font-size:.78rem;color:var(--muted)}
       <strong>Executive Context:</strong> Rate each statement from 1 (Strongly Disagree) to 5 (Strongly Agree) based on current operational realities rather than future aspirations. All statements are required to proceed.
     </div>
 
-    <!-- On-Screen Error Banner -->
     <div class="error-banner" id="error-banner">
       <div class="error-icon">!</div>
       <div>Please select a rating for all highlighted questions below before moving to the next lever.</div>
     </div>
 
-    <!-- Progress Bar -->
     <div class="progress-wrap">
       <div class="progress-top">
         <span class="progress-label" id="step-indicator">Step 1 of 6 — Lever 01</span>
@@ -322,30 +321,54 @@ footer p{font-size:.78rem;color:var(--muted)}
       <div class="progress-track"><div class="progress-bar" id="prog-bar"></div></div>
     </div>
 
-    <!-- Dynamic Container for Steps -->
     <div id="levers-wrap"></div>
 
-    <!-- Step Controls -->
     <div class="step-nav">
       <button class="btn-outline" id="prev-btn" onclick="moveStep(-1)" style="visibility: hidden;">← Previous Lever</button>
-      <button class="btn-primary" id="next-btn" onclick="moveStep(1)">Next Lever →</button>
+      <button class="btn-primary" id="next-btn" style="width:auto;" onclick="moveStep(1)">Next Lever →</button>
     </div>
 
   </div>
 </section>
 
-<!-- ── LEAD CAPTURE MODAL ── -->
 <div class="modal-overlay" id="lead-modal">
   <div class="modal-box">
     <div class="modal-title">Your Diagnosis is Ready</div>
-    <div class="modal-sub">Enter your details below to unlock your Profit Readiness Score, custom lever breakdown, and tailored improvement roadmap.</div>
+    <div class="modal-sub">Enter your details below to instantly unlock your Profit Readiness Score and custom lever breakdown.</div>
     
-    <!-- Zoho Form Container -->
-    <div id="zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms"></div>
+    <form id="zohocapture-form" action="https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScore/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms/htmlRecordsSubmit" name="form" method="POST" accept-charset="UTF-8" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
+      <input type="hidden" name="zf_referrer_name" value="">
+      <input type="hidden" name="zf_redirect_url" value="">
+      <input type="hidden" name="zc_gad" value="">
+
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" name="Name_First" required placeholder="e.g. David">
+      </div>
+
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" name="Name_Last" required placeholder="e.g. Cambridge">
+      </div>
+
+      <div class="form-group">
+        <label>Work Email</label>
+        <input type="email" name="Email" required placeholder="david@company.com">
+      </div>
+
+      <div class="form-group">
+        <label>Company Name</label>
+        <input type="text" name="SingleLine2" required placeholder="Company Ltd">
+      </div>
+
+      <input type="hidden" name="SingleLine" id="hidden-score-field" value="">
+      <input type="hidden" name="SingleLine1" id="hidden-priority-field" value="">
+
+      <button type="submit" class="btn-primary" style="margin-top: 1rem;">Unlock My Scorecard →</button>
+    </form>
   </div>
 </div>
 
-<!-- ── RESULTS ── -->
 <section id="results-section">
   <div class="results-hero">
     <div class="eyebrow" style="justify-content: center;">Scorecard Complete</div>
@@ -371,7 +394,6 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </section>
 
-<!-- ── CTA ── -->
 <section id="get-started">
   <div class="cta-inner">
     <div class="cta-banner">
@@ -394,7 +416,6 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </section>
 
-<!-- ── FOOTER ── -->
 <footer>
   <div class="footer-inner">
     <div>
@@ -404,7 +425,6 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </footer>
 
-<!-- ── COOKIE CONSENT BANNER ── -->
 <div id="cookie-consent-banner">
   <p>We use cookies to understand site traffic via Google Analytics. You can accept or decline non-essential cookies. See our <a href="privacy-policy.html">Privacy Policy</a> for details.</p>
   <div class="cookie-consent-actions">
@@ -412,39 +432,6 @@ footer p{font-size:.78rem;color:var(--muted)}
     <button id="cookie-consent-accept" type="button">Accept</button>
   </div>
 </div>
-
-<!-- ── ZOHO EMBEDDED FORM SCRIPT ── -->
-<script type="text/javascript">
-  (function() {
-    try {
-      var f = document.createElement("iframe");
-      f.src = 'https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScore/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms?zf_rsz_se=1';
-      f.style.border = "none";
-      f.style.height = "380px";
-      f.style.width = "100%";
-      f.style.transition = "all 0.5s ease";
-      f.setAttribute("aria-label", 'Profit Readiness Scorecard');
-      
-      var d = document.getElementById("zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms");
-      if (d) { d.appendChild(f); }
-
-      window.addEventListener('message', function (event) {
-        var evntData = event.data;
-        if (evntData && typeof evntData === "string") {
-          var zf_ifrm_data = evntData.split("|");
-          if (zf_ifrm_data[0] === "Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms") {
-            if (zf_ifrm_data[1] && zf_ifrm_data[1].indexOf("px") > -1) {
-              f.style.height = zf_ifrm_data[1];
-            }
-            if (zf_ifrm_data.length >= 2 && (zf_ifrm_data[1] === "form_submitted" || zf_ifrm_data.length === 3)) {
-              displayResults();
-            }
-          }
-        }
-      }, false);
-    } catch (e) {}
-  })();
-</script>
 
 <script>
 function toggleMenu(btn){
@@ -625,100 +612,3 @@ function moveStep(direction) {
   
   if (currentStep >= levers.length) {
     currentStep = levers.length - 1;
-    document.getElementById(`step-${currentStep}`).classList.add('active');
-
-    calculateAndOpenModal();
-    return;
-  }
-  
-  document.getElementById(`step-${currentStep}`).classList.add('active');
-  document.getElementById('step-indicator').textContent = `Step ${currentStep + 1} of 6 — Lever ${levers[currentStep].num}`;
-  
-  document.getElementById('prev-btn').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
-  document.getElementById('next-btn').textContent = currentStep === levers.length - 1 ? 'Calculate My Score →' : 'Next Lever →';
-}
-
-function calculateAndOpenModal() {
-  cachedScores = levers.map((_, li) => {
-    let s = 0;
-    levers[li].questions.forEach((__, qi) => {
-      const sel = document.querySelector(`input[name="q_${li}_${qi}"]:checked`);
-      if (sel) s += +sel.value;
-    });
-    return s;
-  });
-
-  cachedTotal = cachedScores.reduce((a, b) => a + b, 0);
-  const minSc = Math.min(...cachedScores);
-  cachedMinIdx = cachedScores.indexOf(minSc);
-  const priorityLeverTitle = levers[cachedMinIdx].title;
-
-  const zohoIframe = document.querySelector("#zf_div_Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms iframe");
-  if (zohoIframe) {
-    const baseUrl = 'https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScore/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms';
-    
-    const params = new URLSearchParams({
-      'zf_rsz_se': '1',
-      'SingleLine': String(cachedTotal),
-      'SingleLine1': priorityLeverTitle
-    });
-
-    zohoIframe.src = `${baseUrl}?${params.toString()}`;
-  }
-
-  document.getElementById('lead-modal').classList.add('show');
-}
-
-function displayResults() {
-  document.getElementById('lead-modal').classList.remove('show');
-  
-  const priorityLeverTitle = levers[cachedMinIdx].title;
-
-  document.getElementById('res-num').textContent = cachedTotal;
-  const z = zones.find(zn => cachedTotal >= zn.min && cachedTotal <= zn.max) || zones[3];
-  document.getElementById('res-zone').textContent = z.zone;
-  document.getElementById('res-desc').textContent = z.desc;
-
-  document.getElementById('priority-title').textContent = priorityLeverTitle;
-  document.getElementById('priority-desc').textContent = levers[cachedMinIdx].lowestDesc;
-
-  const bd = document.getElementById('breakdown');
-  bd.innerHTML = levers.map((l, i) => `
-    <div class="bd-row">
-      <div class="bd-label">${l.title}</div>
-      <div class="bd-track"><div class="bd-fill" id="bdf-${i}"></div></div>
-      <div class="bd-val" id="bdv-${i}">${cachedScores[i]}/15</div>
-    </div>
-  `).join('');
-
-  const resSec = document.getElementById('results-section');
-  resSec.classList.add('show');
-  resSec.scrollIntoView({ behavior: 'smooth' });
-
-  setTimeout(() => {
-    cachedScores.forEach((s, i) => {
-      const fill = document.getElementById(`bdf-${i}`);
-      if (fill) fill.style.width = `${(s / 15) * 100}%`;
-    });
-  }, 100);
-}
-
-// Cookie Consent Handling
-(function(){
-  var stored = localStorage.getItem('cad_cookie_consent');
-  var banner = document.getElementById('cookie-consent-banner');
-  if(!stored && banner){ banner.classList.add('visible'); }
-  document.getElementById('cookie-consent-accept').addEventListener('click', function(){
-    localStorage.setItem('cad_cookie_consent', 'accepted');
-    if(window.gtag){ gtag('consent', 'update', {'analytics_storage': 'granted'}); }
-    banner.classList.remove('visible');
-  });
-  document.getElementById('cookie-consent-reject').addEventListener('click', function(){
-    localStorage.setItem('cad_cookie_consent', 'rejected');
-    if(window.gtag){ gtag('consent', 'update', {'analytics_storage': 'denied'}); }
-    banner.classList.remove('visible');
-  });
-})();
-</script>
-</body>
-</html>
