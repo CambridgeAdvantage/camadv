@@ -7,6 +7,7 @@
 <meta name="description" content="Evaluate your business across 6 core growth levers to identify exact leaks in your pipeline, margins, and sales conversions.">
 <link rel="icon" type="image/png" sizes="64x64" href="./assets/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -158,17 +159,17 @@ h1 em{font-style:italic;color:var(--gold)}
 
 .step-nav{display:flex;justify-content:space-between;gap:1rem;margin-top:2rem}
 
-/* ── MODAL ── */
+/* ── ZOHO FORM INTEGRATED STYLES ── */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);z-index:1000;align-items:center;justify-content:center;padding:1.5rem}
 .modal-overlay.show{display:flex}
-.modal-box{background:#1a1a1a;border:1px solid var(--border);border-radius:4px;max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:2.2rem;position:relative}
+.modal-box{background:#1a1a1a;border:1px solid var(--border);border-radius:4px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;padding:2.2rem;position:relative}
 .modal-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:#fff;margin-bottom:.4rem;line-height:1.2}
 .modal-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6}
 
-.form-group{margin-bottom:1.2rem}
-.form-group label{display:block;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
-.form-group input{width:100%;background:var(--navy);border:1px solid var(--border);border-radius:3px;padding:.8rem 1rem;color:#fff;font-family:'DM Sans',sans-serif;font-size:.9rem}
-.form-group input:focus{outline:none;border-color:var(--gold)}
+.zcwf_row{margin-bottom:1.2rem;}
+.zcwf_col_lab{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;display:block;}
+.zcwf_col_fld input[type=text]{width:100% !important;background:var(--navy) !important;border:1px solid var(--border) !important;border-radius:3px;padding:.8rem 1rem !important;color:#fff !important;font-family:'DM Sans',sans-serif !important;font-size:.9rem !important;float:none !important;}
+.zcwf_col_fld input[type=text]:focus{outline:none;border-color:var(--gold) !important;}
 
 /* ── RESULTS ── */
 #results-section{display:none;background:#2a2a2a;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -256,6 +257,7 @@ footer p{font-size:.78rem;color:var(--muted)}
 @media(max-width:640px){#cookie-consent-banner{padding:1.2rem 1.4rem}}
 </style>
 
+<!-- Google tag (gtag.js) -->
 <script data-cfasync="false" async src="https://www.googletagmanager.com/gtag/js?id=G-D2E8CNH4PN"></script>
 <script data-cfasync="false">
   window.dataLayer = window.dataLayer || [];
@@ -273,6 +275,7 @@ footer p{font-size:.78rem;color:var(--muted)}
 </head>
 <body>
 
+<!-- ── NAV ── -->
 <nav>
   <a href="index.html#home" class="logo-link"><img src="./assets/logo.jpg" alt="Cambridge Advantage" class="logo-img"></a>
   <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" onclick="toggleMenu(this)"><span></span><span></span><span></span></button>
@@ -289,6 +292,7 @@ footer p{font-size:.78rem;color:var(--muted)}
   </ul>
 </nav>
 
+<!-- ── PAGE HEADER ── -->
 <section id="services-header">
   <div>
     <div class="eyebrow">Executive Diagnostic</div>
@@ -301,6 +305,7 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </section>
 
+<!-- ── MULTI-STEP AUDIT ── -->
 <section id="audit-section">
   <div class="section-inner">
     
@@ -308,11 +313,13 @@ footer p{font-size:.78rem;color:var(--muted)}
       <strong>Executive Context:</strong> Rate each statement from 1 (Strongly Disagree) to 5 (Strongly Agree) based on current operational realities rather than future aspirations. All statements are required to proceed.
     </div>
 
+    <!-- On-Screen Error Banner -->
     <div class="error-banner" id="error-banner">
       <div class="error-icon">!</div>
       <div>Please select a rating for all highlighted questions below before moving to the next lever.</div>
     </div>
 
+    <!-- Progress Bar -->
     <div class="progress-wrap">
       <div class="progress-top">
         <span class="progress-label" id="step-indicator">Step 1 of 6 — Lever 01</span>
@@ -321,8 +328,10 @@ footer p{font-size:.78rem;color:var(--muted)}
       <div class="progress-track"><div class="progress-bar" id="prog-bar"></div></div>
     </div>
 
+    <!-- Dynamic Container for Steps -->
     <div id="levers-wrap"></div>
 
+    <!-- Step Controls -->
     <div class="step-nav">
       <button class="btn-outline" id="prev-btn" onclick="moveStep(-1)" style="visibility: hidden;">← Previous Lever</button>
       <button class="btn-primary" id="next-btn" style="width:auto;" onclick="moveStep(1)">Next Lever →</button>
@@ -331,44 +340,75 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </section>
 
+<!-- ── ZOHO LEAD CAPTURE MODAL ── -->
 <div class="modal-overlay" id="lead-modal">
   <div class="modal-box">
     <div class="modal-title">Your Diagnosis is Ready</div>
     <div class="modal-sub">Enter your details below to instantly unlock your Profit Readiness Score and custom lever breakdown.</div>
     
-    <form id="zohocapture-form" action="https://forms.zohopublic.eu/cambridgeadvantage1/form/ProfitReadinessScore/formperma/Ntq1jTNLTg8bC8KuGdmgK2z0uEWT95OxrpnIoTLA2Ms/htmlRecordsSubmit" name="form" method="POST" accept-charset="UTF-8" enctype="multipart/form-data" onsubmit="handleFormSubmit(event)">
-      <input type="hidden" name="zf_referrer_name" value="">
-      <input type="hidden" name="zf_redirect_url" value="">
-      <input type="hidden" name="zc_gad" value="">
+    <!-- Hidden iframe target prevents CORS issues while sending data to Zoho -->
+    <iframe name="zoho_target" id="zoho_target" style="display:none;"></iframe>
 
-      <div class="form-group">
-        <label>First Name</label>
-        <input type="text" name="Name_First" required placeholder="e.g. David">
+    <form id="webform235942000001035027" name="WebToLeads235942000001035027" accept-charset="UTF-8" method="POST" action="https://crm.zoho.eu/crm/WebToLeadForm" target="zoho_target">
+      <!-- Zoho Required Hidden Fields -->
+      <input type="text" style="display:none;" name="xnQsjsdp" value="29d59610cbc96dc5265ee441f7db432c5df36f45b78e9d8506234bdc7168b96c">
+      <input type="hidden" name="zc_gad" id="zc_gad" value="">
+      <input type="text" style="display:none;" name="xmIwtLD" value="1a2bd45ec3bc31b545e7d32d62b040b6d58a4b3a9182e062c3503c89308a377880591b49a66940aeb1776abff56d8baf">
+      <input type="text" style="display:none;" name="actionType" value="TGVhZHM=">
+      <input type="text" style="display:none;" name="returnURL" value="null">
+      <input type="text" style="display:none;" name="aG9uZXlwb3Q" value=""/>
+
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="First_Name">First Name <span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <input type="text" id="First_Name" aria-required="true" aria-label="First Name" name="First Name" maxlength="40" required>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>Last Name</label>
-        <input type="text" name="Name_Last" required placeholder="e.g. Cambridge">
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="Last_Name">Last Name <span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <input type="text" id="Last_Name" aria-required="true" aria-label="Last Name" name="Last Name" maxlength="80" required>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>Work Email</label>
-        <input type="email" name="Email" required placeholder="david@company.com">
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="Email">Email <span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <input type="text" ftype="email" autocomplete="false" id="Email" aria-required="true" aria-label="Email" name="Email" maxlength="100" required>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>Company Name</label>
-        <input type="text" name="SingleLine2" required placeholder="Company Ltd">
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="Company">Company <span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <input type="text" id="Company" aria-required="true" aria-label="Company" name="Company" maxlength="200" required>
+        </div>
       </div>
 
-      <input type="hidden" name="SingleLine" id="hidden-score-field" value="">
-      <input type="hidden" name="SingleLine1" id="hidden-priority-field" value="">
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="Website">Website <span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <input type="text" id="Website" aria-required="true" aria-label="Website" name="Website" maxlength="255" required>
+        </div>
+      </div>
 
-      <button type="submit" class="btn-primary" style="margin-top: 1rem;">Unlock My Scorecard →</button>
+      <div class="zcwf_row">
+        <div class="zcwf_col_lab"><label for="Annual_Revenue">Annual Revenue <span style="color:red;">*</span></label></div>
+        <div class="zcwf_col_fld">
+          <input type="text" id="Annual_Revenue" aria-required="true" aria-label="Annual Revenue" name="Annual Revenue" maxlength="16" required>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.5rem;">
+        <input type="submit" id="formsubmit" class="formsubmit zcwf_button btn-primary" value="Unlock My Scorecard →" aria-label="Submit" title="Submit">
+        <input type="reset" id="formreset" style="display:none;">
+      </div>
     </form>
   </div>
 </div>
 
+<!-- ── RESULTS ── -->
 <section id="results-section">
   <div class="results-hero">
     <div class="eyebrow" style="justify-content: center;">Scorecard Complete</div>
@@ -394,6 +434,7 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </section>
 
+<!-- ── CTA ── -->
 <section id="get-started">
   <div class="cta-inner">
     <div class="cta-banner">
@@ -416,6 +457,7 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </section>
 
+<!-- ── FOOTER ── -->
 <footer>
   <div class="footer-inner">
     <div>
@@ -425,6 +467,7 @@ footer p{font-size:.78rem;color:var(--muted)}
   </div>
 </footer>
 
+<!-- ── COOKIE CONSENT BANNER ── -->
 <div id="cookie-consent-banner">
   <p>We use cookies to understand site traffic via Google Analytics. You can accept or decline non-essential cookies. See our <a href="privacy-policy.html">Privacy Policy</a> for details.</p>
   <div class="cookie-consent-actions">
@@ -447,9 +490,9 @@ const levers = [
     num: "01", title: "Market Positioning",
     tag: "Are the right people finding you — and when they do, do they immediately understand why you are the right choice?",
     questions: [
-      "I can describe my ideal client in one specific sentence — their industry, size, situation, and exact problem.",
-      "When prospects first encounter my business, they immediately understand what I do and who it is for.",
-      "My pricing reflects a clear premium value position rather than competing on price or availability."
+      "Our positioning clearly differentiates us from competitors and is instantly understood by our ideal clients.",
+      "We target a well-defined niche or target market where we hold a distinct competitive advantage.",
+      "Our messaging consistently communicates high-value outcomes rather than just listing features or services."
     ],
     lowestDesc: "Market positioning is the foundation everything else rests on. If the right people cannot find you — or cannot immediately understand why you are the right choice — every other lever underperforms.",
   },
@@ -457,9 +500,9 @@ const levers = [
     num: "02", title: "Pipeline & Conversion",
     tag: "Do you have a consistent flow of the right enquiries — and a reliable process for turning them into paying clients?",
     questions: [
-      "I have at least one active, consistent channel generating qualified sales conversations every week.",
-      "My lead generation activities continue consistently even when my project capacity is full.",
-      "I follow a structured, repeatable sales conversion process rather than relying on improvisation."
+      "We have a predictable, repeatable lead generation process that consistently fills our pipeline.",
+      "Our sales conversion rate from initial prospect meeting to signed agreement is consistently tracked and optimized.",
+      "We actively nurture prospects over time rather than relying solely on single-touch interactions."
     ],
     lowestDesc: "Without a reliable pipeline and a conversion process that works consistently, growth depends on luck. Stronger conversion is essential to turn qualified traffic into profitable contracts.",
   },
@@ -467,9 +510,9 @@ const levers = [
     num: "03", title: "Consultative Selling",
     tag: "Do prospects experience you as a trusted advisor who diagnoses before prescribing — or as a vendor presenting a solution?",
     questions: [
-      "I spend the majority of sales conversations asking deep diagnostic questions rather than pitching.",
-      "Prospects regularly tell me I understand their business challenges better than expected.",
-      "I present a custom proposal only after the prospect articulates their problem and confirms it is a priority."
+      "Our sales conversations focus heavily on diagnosing deep business problems rather than pitching services.",
+      "We follow a rigorous discovery framework that uncovers true underlying constraints and financial impacts.",
+      "Clients perceive us as strategic advisors rather than replaceable vendors or commodity suppliers."
     ],
     lowestDesc: "The difference between competing on price and commanding premium fees is almost always how you sell. Trust-first consultative selling reduces objections and shortens sales cycles.",
   },
@@ -477,9 +520,9 @@ const levers = [
     num: "04", title: "Revenue per Client",
     tag: "Are you maximising the value of every client relationship — through strong pricing, repeat business, and referrals?",
     questions: [
-      "I have deliberately increased my prices or restructured my service offer in the last 12 months.",
-      "A significant portion of my annual revenue comes from repeat business or expanded retainer scope.",
-      "I have a systematic process for requesting referrals from satisfied clients at key milestones."
+      "We regularly review and optimize our pricing structure to capture full value for our expertise.",
+      "We have structured cross-selling, up-selling, or recurring retainer opportunities in place for existing clients.",
+      "We have a systematic referral generation process embedded into our client delivery milestones."
     ],
     lowestDesc: "Existing clients are the most underused asset in most businesses. Increasing retention, lifetime value, and referrals delivers high-margin expansion without added ad spend.",
   },
@@ -487,9 +530,9 @@ const levers = [
     num: "05", title: "Cash, Margin & Profit",
     tag: "Does the business retain enough of what it earns — and is cash managed with enough visibility to avoid being caught out?",
     questions: [
-      "I review gross and net profit margins monthly to ensure every engagement remains profitable.",
-      "I maintain a rolling cash flow forecast looking at least 90 days ahead.",
-      "The business holds sufficient cash reserves to withstand a major client loss or delay."
+      "We maintain rigorous gross and net profit margin targets across all client engagements and service lines.",
+      "Our cash flow forecasting provides clear visibility into financial runway at least 90 days ahead.",
+      "We manage working capital effectively to ensure financial stability and buffer against unforeseen dips."
     ],
     lowestDesc: "Revenue is vanity, profit is sanity, and cash flow is reality. Clear financial forecasting and margin optimization ensure you retain the capital your growth generates.",
   },
@@ -497,9 +540,9 @@ const levers = [
     num: "06", title: "Systems & Operations",
     tag: "Does the business run on documented, repeatable processes — or does it depend on your presence and memory?",
     questions: [
-      "Core delivery processes are documented well enough that a team member can execute them without me.",
-      "The business can run smoothly for two consecutive weeks without my daily involvement.",
-      "Our operational systems could handle a 50% increase in client volume without breaking."
+      "Our core operational and delivery processes are fully documented in a team playbook or operating system.",
+      "The business can operate smoothly and deliver quality results without my day-to-day intervention.",
+      "Our technology stack and internal systems scale efficiently to support increased client volume."
     ],
     lowestDesc: "Systems and operations determine whether growth is scalable or exhausting. Streamlining key processes eliminates waste and builds long-term enterprise value.",
   },
@@ -612,3 +655,130 @@ function moveStep(direction) {
   
   if (currentStep >= levers.length) {
     currentStep = levers.length - 1;
+    document.getElementById(`step-${currentStep}`).classList.add('active');
+
+    prepareModalData();
+    return;
+  }
+  
+  document.getElementById(`step-${currentStep}`).classList.add('active');
+  document.getElementById('step-indicator').textContent = `Step ${currentStep + 1} of 6 — Lever ${levers[currentStep].num}`;
+  
+  document.getElementById('prev-btn').style.visibility = currentStep === 0 ? 'hidden' : 'visible';
+  document.getElementById('next-btn').textContent = currentStep === levers.length - 1 ? 'Calculate My Score →' : 'Next Lever →';
+}
+
+function prepareModalData() {
+  cachedScores = levers.map((_, li) => {
+    let s = 0;
+    levers[li].questions.forEach((__, qi) => {
+      const val = document.querySelector(`input[name="q_${li}_${qi}"]:checked`);
+      if (val) s += parseInt(val.value);
+    });
+    return s;
+  });
+
+  cachedTotal = cachedScores.reduce((a, b) => a + b, 0);
+  cachedMinIdx = cachedScores.indexOf(Math.min(...cachedScores));
+
+  document.getElementById('lead-modal').classList.add('show');
+}
+
+function displayResults() {
+  document.getElementById('lead-modal').classList.remove('show');
+
+  const z = zones.find(z => cachedTotal >= z.min && cachedTotal <= z.max) || zones[zones.length-1];
+
+  document.getElementById('res-num').textContent = cachedTotal;
+  document.getElementById('res-zone').textContent = z.zone;
+  document.getElementById('res-desc').textContent = z.desc;
+
+  const bdiv = document.getElementById('breakdown');
+  bdiv.innerHTML = levers.map((l, i) => {
+    const sc = cachedScores[i];
+    let color = 'var(--gold)';
+    if(sc <= 8) color = '#e74c3c';
+    else if(sc <= 11) color = '#f39c12';
+    
+    return `
+      <div class="bd-row">
+        <div class="bd-label">${l.title}</div>
+        <div class="bd-track"><div class="bd-fill" id="bdf-${i}" style="background:${color}"></div></div>
+        <div class="bd-val" style="color:${color}">${sc}/15</div>
+      </div>
+    `;
+  }).join('');
+
+  document.getElementById('priority-title').textContent = levers[cachedMinIdx].title;
+  document.getElementById('priority-desc').textContent = levers[cachedMinIdx].lowestDesc;
+
+  document.getElementById('results-section').classList.add('show');
+  document.getElementById('results-section').scrollIntoView({ behavior: 'smooth' });
+
+  setTimeout(() => {
+    levers.forEach((_, i) => {
+      const el = document.getElementById(`bdf-${i}`);
+      if(el) el.style.width = `${(cachedScores[i] / 15) * 100}%`;
+    });
+  }, 100);
+}
+
+// ── ZOHO VALIDATION AND SUBMISSION SCRIPT ──
+function validateEmail235942000001035027(){
+  var form = document.forms['WebToLeads235942000001035027'];
+  var emailFld = form.querySelectorAll('[ftype=email]');
+  var i;
+  for(i = 0; i < emailFld.length; i++ ) {
+    var emailVal = emailFld[i].value;
+    if ((emailVal.replace (/^\s+|\s+$/g,'') ) .length != 0) {
+      var atpos = emailVal.indexOf('@');
+      var dotpos = emailVal.lastIndexOf('.');
+      if(atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= emailVal.length) {
+        alert('Please enter a valid email address.');
+        emailFld[i].focus();
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+function checkMandatory235942000001035027(){
+  var mndFileds = new Array('Company', 'First Name', 'Last Name', 'Email', 'Website', 'Annual Revenue');
+  var fldLangVal = new Array('Company', 'First Name', 'Last Name', 'Email', 'Website', 'Annual Revenue');
+  for (i = 0; i < mndFileds.length; i++ ) {
+    var fieldObj = document.forms['WebToLeads235942000001035027'] [mndFileds[i]];
+    if (fieldObj) {
+      if(((fieldObj.value) .replace (/^\s+|\s+$/g,'') ) .length == 0) {
+        alert(fldLangVal[i] + ' cannot be empty');
+        fieldObj.focus();
+        return false;
+      }
+    }
+  }
+  if ( !validateEmail235942000001035027 () ) {
+    return false;
+  }
+  return true;
+}
+
+document.getElementById('webform235942000001035027').addEventListener('submit', function(e){
+  var ismandatory = checkMandatory235942000001035027();
+  
+  if(!ismandatory) {
+    e.preventDefault();
+    return false;
+  }
+
+  if(typeof _wfa_track !== 'undefined' && _wfa_track.wfa_submit) {
+    _wfa_track.wfa_submit(e);
+  }
+
+  // Trigger score reveal immediately upon valid submission
+  displayResults();
+  
+  // Native POST continues quietly into hidden iframe
+});
+</script>
+</body>
+</html>
