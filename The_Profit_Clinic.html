@@ -452,12 +452,11 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class="form-subtitle">Complete these details to request your 30-minute session.</p>
                         </div>
 
-                        <form id="clinicForm" action="https://crm.zoho.eu/crm/WebToLeadForm" method="POST" onsubmit="redirectToZoho(event)"> 
-                            <!-- Zoho CRM Integration Fields (Replace value attributes with your Zoho Web-to-Lead/Web-to-Contact Form IDs) -->
+                        <form id="clinicForm" onsubmit="submitForm(event)"> 
+                            <!-- Zoho CRM Integration Fields -->
                             <input type="hidden" name="xnQsjsdp" value="YOUR_ZOHO_FORM_ID">
                             <input type="hidden" name="xmIpvD" value="YOUR_ZOHO_ACTION_ID">
                             <input type="hidden" name="actionType" value="TGVhZHM=">
-                            <input type="hidden" name="returnURL" value="https://cambridgeadvantage.zohobookings.eu/253745000000036045">
 
                             <!-- Client Contact Details -->
                             <div class="form-group">
@@ -591,17 +590,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script data-cfasync="false">
-function redirectToZoho(event) {
+function submitForm(event) {
     event.preventDefault();
 
-    const form = document.getElementById('clinicForm');
-    const baseUrl = "https://cambridgeadvantage.zohobookings.eu/253745000000036045";
-    
-    // Grab input values
-    const firstName = encodeURIComponent(document.getElementById('firstname').value);
-    const lastName  = encodeURIComponent(document.getElementById('lastname').value);
-    const email     = encodeURIComponent(document.getElementById('email').value);
-    const fullName  = encodeURIComponent(`${document.getElementById('firstname').value} ${document.getElementById('lastname').value}`);
+    const form = event.target;
+    const targetUrl = "https://crm.zoho.eu/crm/WebToLeadForm";
 
     // Track conversion event in Google Tag Manager / Analytics
     if (typeof gtag === 'function') {
@@ -612,19 +605,24 @@ function redirectToZoho(event) {
       });
     }
 
-    // Build Zoho Bookings URL with pre-filled parameters
-    const targetUrl = `${baseUrl}?name=${fullName}&firstname=${firstName}&lastname=${lastName}&email=${email}`;
-
-    // Submit form data to CRM via Fetch in the background before redirecting
+    // Submit form data silently in the background via fetch
     const formData = new FormData(form);
-    fetch(form.action, {
-        method: form.method,
+    
+    fetch(targetUrl, {
+        method: 'POST',
         body: formData,
         mode: 'no-cors'
     }).then(() => {
-        window.location.href = targetUrl;
-    }).catch(() => {
-        window.location.href = targetUrl;
+        // Display on-page confirmation message
+        form.innerHTML = `
+          <div style="padding: 2rem 1rem; text-align: center;">
+            <h3 style="font-family:'Cormorant Garamond',serif; font-size: 2rem; color: #fff; margin-bottom: 1rem;">Thank You!</h3>
+            <p style="font-size: 0.9rem; color: var(--muted); line-height: 1.7;">Your diagnostic brief has been submitted successfully. We will review your details and be in touch shortly.</p>
+          </div>
+        `;
+    }).catch((error) => {
+        console.error('Error submitting form:', error);
+        alert('There was an error submitting your brief. Please try again.');
     });
 }
 </script>
