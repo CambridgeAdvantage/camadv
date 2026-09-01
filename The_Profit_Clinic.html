@@ -405,7 +405,6 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <div class="clinic-grid">
       
-                
                 <!-- Left Column: Copy & Value Proposition -->
                 <div class="left-col">
                     <div class="info-card">
@@ -452,7 +451,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p class="form-subtitle">Complete these details to request your 30-minute session.</p>
                         </div>
 
-                        <form action="https://cambridgeadvantage.zohobookings.eu/253745000000036045/#/253745000000036045" method="GET" target="_blank">
+                        <form id="clinicForm" onsubmit="handleBookingRedirect(event)">
 
                             <!-- Client Contact Details -->
                             <div class="form-group">
@@ -588,7 +587,25 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </footer>
 
-<script type="d8acf200b3e10c8bd426b636-text/javascript">
+<script>
+function handleBookingRedirect(event) {
+  event.preventDefault();
+  const fname = encodeURIComponent(document.getElementById('firstname').value);
+  const lname = encodeURIComponent(document.getElementById('lastname').value);
+  const email = encodeURIComponent(document.getElementById('email').value);
+  
+  if (typeof gtag === 'function') {
+    gtag('event', 'book_free_session', {
+      'event_category': 'engagement',
+      'event_label': 'Book Free Session Form Submit',
+      'page_location': window.location.href
+    });
+  }
+  
+  const bookingUrl = `https://cambridgeadvantage.zohobookings.eu/253745000000036045/#/253745000000036045?name=${fname}%20${lname}&email=${email}`;
+  window.open(bookingUrl, '_blank');
+}
+
 function toggleMenu(btn){
   const links=document.querySelector('.nav-links');
   const open=links.classList.toggle('open');
