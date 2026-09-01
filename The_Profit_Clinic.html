@@ -88,7 +88,6 @@ h1 em{font-style:italic;color:var(--gold)}
 /* ── ABOUT ── */
 #about{background:#2a2a2a;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .about-inner{max-width:1100px;margin:0 auto;padding:5rem 4rem;display:grid;grid-template-columns:1fr 1.6fr;gap:5rem;align-items:start}
-.about-left{}
 .about-right p{font-size:.95rem;line-height:1.9;color:var(--muted);margin-bottom:1.1rem}
 .about-right p:last-of-type{margin-bottom:1.8rem}
 
@@ -275,46 +274,53 @@ footer p{font-size:.78rem;color:var(--muted)}
               </div>
 
               <form id="webform235942000001035027" name="WebToLeads235942000001035027" accept-charset="UTF-8">
-                  <!-- Configured Live Zoho Keys -->
+                  <!-- Hidden Security Keys for Zoho CRM -->
                   <input type="text" style="display:none;" name="xnQsjsdp" value="29d59610cbc96dc5265ee441f7db432c5df36f45b78e9d8506234bdc7168b96c">
                   <input type="hidden" name="zc_gad" id="zc_gad" value="">
                   <input type="text" style="display:none;" name="xmIwtLD" value="1a2bd45ec3bc31b545e7d32d62b040b6d58a4b3a9182e062c3503c89308a377880591b49a66940aeb1776abff56d8baf">
                   <input type="text" style="display:none;" name="actionType" value="TGVhZHM=">
                   
-                  <!-- Your Zoho Booking Calendar URL -->
+                  <!-- Redirect Target URL -->
                   <input type="text" style="display:none;" name="returnURL" value="https://cambridgeadvantage.zohobookings.eu/253745000000036045">
                   <input type="text" style="display:none;" name="aG9uZXlwb3Q" value=""/>
 
+                  <!-- Field 1: First Name -->
                   <div class="form-group">
                       <label class="form-label" for="First_Name">First Name <span class="req">*</span></label>
                       <input type="text" id="First_Name" name="First Name" class="form-control" maxlength="40" required>
                   </div>
 
+                  <!-- Field 2: Last Name -->
                   <div class="form-group">
                       <label class="form-label" for="Last_Name">Last Name <span class="req">*</span></label>
                       <input type="text" id="Last_Name" name="Last Name" class="form-control" maxlength="80" required>
                   </div>
 
+                  <!-- Field 3: Email -->
                   <div class="form-group">
                       <label class="form-label" for="Email">Work Email <span class="req">*</span></label>
                       <input type="email" id="Email" ftype="email" name="Email" class="form-control" maxlength="100" required>
                   </div>
 
+                  <!-- Field 4: Company Name -->
                   <div class="form-group">
                       <label class="form-label" for="Company">Company Name <span class="req">*</span></label>
                       <input type="text" id="Company" name="Company" class="form-control" maxlength="200" required>
                   </div>
 
+                  <!-- Field 5: Website -->
                   <div class="form-group">
                       <label class="form-label" for="Website">Website <span class="req">*</span></label>
                       <input type="text" id="Website" name="Website" class="form-control" placeholder="camadvantage.com" maxlength="255" required>
                   </div>
 
+                  <!-- Field 6: Revenue -->
                   <div class="form-group">
                       <label class="form-label" for="Annual_Revenue">Annual Revenue Stage <span class="req">*</span></label>
                       <input type="text" id="Annual_Revenue" name="Annual Revenue" class="form-control" placeholder="e.g. £100k - £500k" maxlength="16" required>
                   </div>
 
+                  <!-- Field 7: Primary Bottleneck -->
                   <div class="form-group">
                       <label class="form-label" for="Description">
                           Primary Bottleneck <span class="req">*</span>
@@ -389,10 +395,6 @@ document.getElementById('webform235942000001035027').addEventListener('submit', 
         cache: 'no-cache'
     })
     .then(response => {
-        const contentType = response.headers.get('Content-Type');
-        return contentType && contentType.includes('application/json') ? response.json() : response.text();
-    })
-    .then(data => {
         window.location.assign('https://cambridgeadvantage.zohobookings.eu/253745000000036045');
     })
     .catch(error => {
