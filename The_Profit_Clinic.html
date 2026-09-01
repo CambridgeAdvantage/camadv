@@ -140,7 +140,7 @@ footer p{font-size:.78rem;color:var(--muted)}
     <li><a href="events.html">Events</a></li>
     <li><a href="blog.html">Blog</a></li>
     <li><a href="index.html#contact">Contact</a></li>
-    <li><a href="#diagnostic" class="nav-cta">Free Session</a></li>
+    <li><a href="https://cambridgeadvantage.zohobookings.eu/#/253745000000036045" target="_blank" rel="noopener noreferrer" class="nav-cta">Free Session</a></li>
   </ul>
 </nav>
 
@@ -151,7 +151,7 @@ footer p{font-size:.78rem;color:var(--muted)}
     <h1 style="font-size:3.8rem;max-width:780px;">Find where your business is <em>leaking profit</em></h1>
     <p class="hero-desc" style="max-width:700px;">A focused, no-obligation Profit Clinic designed to identify one commercial bottleneck and give you a clear 3-step plan to address it.</p>
     <div class="btn-row" style="margin-top:1rem;">
-      <a class="btn-primary" href="#diagnostic">Book Your Clinic ↘</a>
+      <a class="btn-primary" href="https://cambridgeadvantage.zohobookings.eu/#/253745000000036045" target="_blank" rel="noopener noreferrer">Book Your Clinic ↘</a>
       <a class="btn-outline" href="services.html">Explore Our Services</a>
     </div>
   </div>
@@ -216,7 +216,9 @@ footer p{font-size:.78rem;color:var(--muted)}
                 </div>
                 
                 <!-- Zoho Bookings Inline Widget Embed -->
-                <div id="inline-container" class="booking-frame"></div>
+                <div id="inline-container" class="booking-frame">
+                  <iframe src="https://cambridgeadvantage.zohobookings.eu/portal-embed#/253745000000036045" width="100%" height="100%" frameborder="0" allowfullscreen=""></iframe>
+                </div>
             </div>
         </div>
 
@@ -245,18 +247,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
   a.addEventListener('click',e=>{
     const target=document.querySelector(a.getAttribute('href'));
     if(target){e.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'})}
-  });
-});
-</script>
-
-<!-- Zoho Bookings Inline Embed -->
-<script src="https://bookings.nimbuspop.com/assets/embed.js"></script>
-<script>
-window.addEventListener('load', function(){
-  Bookings.inlineEmbed({
-    url: "https://cambridgeadvantage.zohobookings.eu/portal-embed#/253745000000036045",
-    parent: "#inline-container",
-    height: "600px"
   });
 });
 </script>
