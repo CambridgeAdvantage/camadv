@@ -151,7 +151,7 @@ footer p{font-size:.78rem;color:var(--muted)}
     <li><a href="programs.html">Programs</a></li>
     <li><a href="sales-coaching.html">Sales Coaching</a></li>
     <li><a href="how-we-work.html">How We Work</a></li>
-    <li><a href="breakthrough-session.html" class="nav-cta">Free Session</a></li>
+    <li><a href="https://cambridgeadvantage.zohobookings.eu/253745000000036083" target="_blank" rel="noopener" class="nav-cta">Free Session</a></li>
   </ul>
 </nav>
 
@@ -230,7 +230,7 @@ footer p{font-size:.78rem;color:var(--muted)}
           </div>
           <div class="form-group">
             <label for="website">Website *</label>
-            <input type="url" id="website" required placeholder="https://example.com" autocomplete="url">
+            <input type="text" id="website" required placeholder="example.com" autocomplete="url">
           </div>
 
           <button class="btn-primary" type="submit" id="submitBtn" style="width:100%;margin-top:.5rem;">Reveal My Score ↘</button>
@@ -249,7 +249,7 @@ footer p{font-size:.78rem;color:var(--muted)}
         <p class="result-desc" id="resultDesc"></p>
         <div class="result-cta">
           <p class="hero-desc" style="margin-bottom:1.2rem;max-width:100%;">Want to talk through what this means for your business? Book a free Breakthrough Session — a focused 1-on-1 strategy call to map out how to build true operational independence.</p>
-          <a class="btn-primary" href="breakthrough-session.html">Book Your Breakthrough Session ↘</a>
+          <a class="btn-primary" href="https://cambridgeadvantage.zohobookings.eu/253745000000036083" target="_blank" rel="noopener">Book Your Breakthrough Session ↘</a>
         </div>
       </div>
 
@@ -484,7 +484,12 @@ function handleSubmit(e){
   const email = document.getElementById('email').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const business = document.getElementById('business').value.trim();
-  const website = document.getElementById('website').value.trim();
+  let website = document.getElementById('website').value.trim();
+
+  // Ensure website starts with http:// or https:// before submitting to Zoho
+  if (website && !/^https?:\/\//i.test(website)) {
+    website = 'https://' + website;
+  }
 
   const score = calculateScore();
   const band = getBand(score);
