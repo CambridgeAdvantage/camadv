@@ -166,10 +166,64 @@ h1 em{font-style:italic;color:var(--gold)}
 .modal-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;color:#fff;margin-bottom:.4rem;line-height:1.2}
 .modal-sub{font-size:.85rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.6}
 
+/* Zoho Splash & Status Styles */
+.wf_customMessageBox{
+  font-family: 'DM Sans', Arial, sans-serif;
+  color: #132C14;
+  background: #F5FAF5;
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.25);
+  max-width: 90%;
+  width: max-content;
+  word-break: break-word;
+  z-index: 11000;
+  border-radius: 6px;
+  border: 1px solid #A9D3AB;
+  min-width: 100px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+.wf_customCircle{
+  position: relative;
+  background-color: #12AA67;
+  border-radius: 100%;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  margin-right: 7px;
+}
+.wf_customCheckMark{
+  box-sizing: unset !important;
+  position: absolute;
+  transform: rotate(45deg)translate(-50%, -50%);
+  left: 6px;
+  top: 9px;
+  height: 8px;
+  width: 3px;
+  border-bottom: 2px solid #fff;
+  border-right: 2px solid #fff;
+}
+
 .zcwf_row{margin-bottom:1.2rem;}
 .zcwf_col_lab{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;display:block;}
-.zcwf_col_fld input[type=text]{width:100% !important;background:var(--navy) !important;border:1px solid var(--border) !important;border-radius:3px;padding:.8rem 1rem !important;color:#fff !important;font-family:'DM Sans',sans-serif !important;font-size:.9rem !important;float:none !important;}
-.zcwf_col_fld input[type=text]:focus{outline:none;border-color:var(--gold) !important;}
+.zcwf_col_fld input[type=text], .zcwf_col_fld .zcwf_col_fld_slt{
+  width:100% !important;
+  background:var(--navy) !important;
+  border:1px solid var(--border) !important;
+  border-radius:3px;
+  padding:.8rem 1rem !important;
+  color:#fff !important;
+  font-family:'DM Sans',sans-serif !important;
+  font-size:.9rem !important;
+  float:none !important;
+}
+.zcwf_col_fld input[type=text]:focus, .zcwf_col_fld .zcwf_col_fld_slt:focus{outline:none;border-color:var(--gold) !important;}
+.zcwf_col_fld_slt option { background: var(--navy-card); color: #fff; }
+.wfrm_fld_dpNn { display: none; }
 
 /* ── RESULTS ── */
 #results-section{display:none;background:#2a2a2a;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
@@ -346,70 +400,101 @@ footer p{font-size:.78rem;color:var(--muted)}
     <div class="modal-title">Your Diagnosis is Ready</div>
     <div class="modal-sub">Enter your details below to instantly unlock your Profit Readiness Score and custom lever breakdown.</div>
     
+    <div class='wf_customMessageBox' id='wf_splash' style='display:none'>
+      <div class='wf_customCircle'>
+        <div class='wf_customCheckMark'></div>
+      </div>
+      <span id='wf_splash_info'></span>
+    </div>
+
     <!-- Hidden iframe target prevents CORS issues while sending data to Zoho -->
     <iframe name="zoho_target" id="zoho_target" style="display:none;"></iframe>
 
     <form id="webform235942000001035027" name="WebToLeads235942000001035027" accept-charset="UTF-8" method="POST" action="https://crm.zoho.eu/crm/WebToLeadForm" target="zoho_target">
-      <!-- Zoho Required Hidden Fields -->
-      <input type="text" style="display:none;" name="xnQsjsdp" value="29d59610cbc96dc5265ee441f7db432c5df36f45b78e9d8506234bdc7168b96c">
-      <input type="hidden" name="zc_gad" id="zc_gad" value="">
-      <input type="text" style="display:none;" name="xmIwtLD" value="1a2bd45ec3bc31b545e7d32d62b040b6d58a4b3a9182e062c3503c89308a377880591b49a66940aeb1776abff56d8baf">
-      <input type="text" style="display:none;" name="actionType" value="TGVhZHM=">
-      <input type="text" style="display:none;" name="returnURL" value="null">
-      <input type="text" style="display:none;" name="aG9uZXlwb3Q" value=""/>
+      <!-- Zoho Required Hidden Fields from Source 1 -->
+      <input type='text' style='display:none;' name='xnQsjsdp' value='459b39e2588e9fe631270e8652b13ffabac688949abee8e8ef4b4d2c446adbf0'>
+      <input type='hidden' name='zc_gad' id='zc_gad' value=''>
+      <input type='text' style='display:none;' name='xmIwtLD' value='7df9d8887cb450467ed79bec62e3fa973518b9872ed91102255068b9ba44cd656de6b6b6842207c967322879e9a46c29'>
+      <input type='text' style='display:none;' name='actionType' value='TGVhZHM='>
+      <input type='text' style='display:none;' name='returnURL' value='null'>
+      <input type='text' style='display:none;' name='aG9uZXlwb3Q' value=''/>
 
       <div class="zcwf_row">
         <div class="zcwf_col_lab"><label for="First_Name">First Name <span style="color:red;">*</span></label></div>
         <div class="zcwf_col_fld">
-          <input type="text" id="First_Name" aria-required="true" aria-label="First Name" name="First Name" maxlength="40" required>
+          <input type="text" id="First_Name" aria-required="true" aria-label="First Name" name="First Name" aria-valuemax="40" maxlength="40" required>
         </div>
       </div>
 
       <div class="zcwf_row">
         <div class="zcwf_col_lab"><label for="Last_Name">Last Name <span style="color:red;">*</span></label></div>
         <div class="zcwf_col_fld">
-          <input type="text" id="Last_Name" aria-required="true" aria-label="Last Name" name="Last Name" maxlength="80" required>
+          <input type="text" id="Last_Name" aria-required="true" aria-label="Last Name" name="Last Name" aria-valuemax="80" maxlength="80" required>
         </div>
       </div>
 
       <div class="zcwf_row">
         <div class="zcwf_col_lab"><label for="Email">Email <span style="color:red;">*</span></label></div>
         <div class="zcwf_col_fld">
-          <input type="text" ftype="email" autocomplete="false" id="Email" aria-required="true" aria-label="Email" name="Email" maxlength="100" required>
+          <input type="text" ftype="email" autocomplete="false" id="Email" aria-required="true" aria-label="Email" name="Email" aria-valuemax="100" crmlabel="" maxlength="100" required>
         </div>
       </div>
 
-       <div class="zcwf_row">
+      <div class="zcwf_row">
         <div class="zcwf_col_lab"><label for="Phone">Phone <span style="color:red;">*</span></label></div>
         <div class="zcwf_col_fld">
-          <input type="text" ftype="phone" autocomplete="false" id="Phone" aria-required="true" aria-label="Phone" name="Phone" maxlength="40" required>
+          <input type="text" id="Phone" aria-required="true" aria-label="Phone" name="Phone" aria-valuemax="30" maxlength="30" required>
         </div>
       </div>
 
       <div class="zcwf_row">
         <div class="zcwf_col_lab"><label for="Company">Company <span style="color:red;">*</span></label></div>
         <div class="zcwf_col_fld">
-          <input type="text" id="Company" aria-required="true" aria-label="Company" name="Company" maxlength="200" required>
+          <input type="text" id="Company" aria-required="true" aria-label="Company" name="Company" aria-valuemax="200" maxlength="200" required>
         </div>
       </div>
 
       <div class="zcwf_row">
         <div class="zcwf_col_lab"><label for="Website">Website <span style="color:red;">*</span></label></div>
         <div class="zcwf_col_fld">
-          <input type="text" id="Website" aria-required="true" aria-label="Website" name="Website" maxlength="255" required>
+          <input type="text" id="Website" aria-required="true" aria-label="Website" name="Website" aria-valuemax="255" maxlength="255" required>
         </div>
       </div>
 
       <div class="zcwf_row">
         <div class="zcwf_col_lab"><label for="Annual_Revenue">Annual Revenue <span style="color:red;">*</span></label></div>
         <div class="zcwf_col_fld">
-          <input type="text" id="Annual_Revenue" aria-required="true" aria-label="Annual Revenue" name="Annual Revenue" maxlength="16" required>
+          <input type="text" id="Annual_Revenue" aria-required="true" aria-label="Annual Revenue" name="Annual Revenue" aria-valuemax="16" maxlength="16" required>
         </div>
       </div>
 
-      <div style="margin-top: 1.5rem;">
+      <div class='zcwf_row wfrm_fld_dpNn'>
+        <div class='zcwf_col_lab'><label for='Lead_Source'>Lead Source</label></div>
+        <div class='zcwf_col_fld'>
+          <select class='zcwf_col_fld_slt' role='combobox' aria-expanded='false' aria-haspopup='listbox' id='Lead_Source' onChange='addAriaSelected235942000001035027()' aria-required='false' aria-label='Lead Source' name='Lead Source'>
+            <option value='-None-'>-None-</option>
+            <option value='Advertisement'>Advertisement</option>
+            <option selected value='Profit Readiness Score'>Profit Readiness Score</option>
+            <option value='Cold Call'>Cold Call</option>
+            <option value='Employee Referral'>Employee Referral</option>
+            <option value='External Referral'>External Referral</option>
+            <option value='Partner'>Partner</option>
+            <option value='Public Relations'>Public Relations</option>
+            <option value='Trade Show'>Trade Show</option>
+            <option value='Web Form'>Web Form</option>
+            <option value='Search Engine'>Search Engine</option>
+            <option value='Facebook'>Facebook</option>
+            <option value='Twitter'>Twitter</option>
+            <option value='Online Store'>Online Store</option>
+            <option value='Seminar Partner'>Seminar Partner</option>
+            <option value='Web Download'>Web Download</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.5rem; display: flex; gap: 10px;">
         <input type="submit" id="formsubmit" class="formsubmit zcwf_button btn-primary" value="Unlock My Scorecard →" aria-label="Submit" title="Submit">
-        <input type="reset" id="formreset" style="display:none;">
+        <input type="reset" class="zcwf_button btn-outline" role="button" name="reset" value="Reset" aria-label="Reset" title="Reset" style="width: auto;">
       </div>
     </form>
   </div>
@@ -730,7 +815,16 @@ function displayResults() {
   }, 100);
 }
 
-// ── ZOHO VALIDATION AND SUBMISSION SCRIPT ──
+// ── ZOHO VALIDATION & SCRIPT FUNCTIONS FROM SOURCE 1 ──
+function addAriaSelected235942000001035027(){
+  var optionElem = event.target;
+  var previousSelectedOption = optionElem.querySelector('[aria-selected=true]');
+  if (previousSelectedOption) {
+    previousSelectedOption.removeAttribute('aria-selected');
+  }
+  optionElem.querySelectorAll('option') [optionElem.selectedIndex] .ariaSelected = 'true';
+}
+
 function validateEmail235942000001035027(){
   var form = document.forms['WebToLeads235942000001035027'];
   var emailFld = form.querySelectorAll('[ftype=email]');
@@ -750,16 +844,33 @@ function validateEmail235942000001035027(){
   return true;
 }
 
-function checkMandatory235942000001035027(){
-  var mndFileds = new Array('Company', 'First Name', 'Last Name', 'Email', 'Website', 'Annual Revenue');
-  var fldLangVal = new Array('Company', 'First Name', 'Last Name', 'Email', 'Website', 'Annual Revenue');
+function checkMandatory235942000001035027(isAjax){
+  var mndFileds = new Array('Company', 'First Name', 'Last Name', 'Email', 'Phone', 'Website', 'Annual Revenue');
+  var fldLangVal = new Array('Company', 'First Name', 'Last Name', 'Email', 'Phone', 'Website', 'Annual Revenue');
   for (i = 0; i < mndFileds.length; i++ ) {
     var fieldObj = document.forms['WebToLeads235942000001035027'] [mndFileds[i]];
     if (fieldObj) {
       if(((fieldObj.value) .replace (/^\s+|\s+$/g,'') ) .length == 0) {
+        if (fieldObj.type == 'file') {
+          alert('Please select a file to upload.');
+          fieldObj.focus();
+          return false;
+        }
         alert(fldLangVal[i] + ' cannot be empty');
         fieldObj.focus();
         return false;
+      } else if (fieldObj.nodeName == 'SELECT') {
+        if (fieldObj.options[fieldObj.selectedIndex].value == '-None-') {
+          alert(fldLangVal[i] + ' cannot be none');
+          fieldObj.focus();
+          return false;
+        }
+      } else if (fieldObj.type == 'checkbox') {
+        if (fieldObj.checked == false) {
+          alert('Please accept ' + fldLangVal[i]);
+          fieldObj.focus();
+          return false;
+        }
       }
     }
   }
@@ -769,8 +880,21 @@ function checkMandatory235942000001035027(){
   return true;
 }
 
+function captchaFailedHandling235942000001035027(message){
+  var capErr = document.getElementById('captchaErr235942000001035027');
+  if(capErr) {
+    capErr.innerHTML = message;
+    capErr.style.visibility = 'visible';
+    var capFld = document.getElementById('captchaField235942000001035027');
+    if(capFld) capFld.focus();
+    setTimeout(function(){
+      capErr.style.visibility = 'hidden';
+    }, 5000);
+  }
+}
+
 document.getElementById('webform235942000001035027').addEventListener('submit', function(e){
-  var ismandatory = checkMandatory235942000001035027();
+  var ismandatory = checkMandatory235942000001035027(true);
   
   if(!ismandatory) {
     e.preventDefault();
@@ -781,10 +905,8 @@ document.getElementById('webform235942000001035027').addEventListener('submit', 
     _wfa_track.wfa_submit(e);
   }
 
-  // Trigger score reveal immediately upon valid submission
+  // Calculate and display user results page upon submission
   displayResults();
-  
-  // Native POST continues quietly into hidden iframe
 });
 </script>
 </body>
