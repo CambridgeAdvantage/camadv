@@ -192,6 +192,8 @@
     .form-label{display:block;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;color:#fff;letter-spacing:.02em;margin-bottom:.45rem}
     .form-label em, .req{color:var(--gold);font-style:normal}
     .form-hint{display:block;font-family:'DM Sans',sans-serif;font-weight:400;font-size:.72rem;color:var(--muted);margin-top:.2rem}
+    .input-wrapper{position:relative;display:flex;align-items:center}
+    .currency-symbol{position:absolute;right:1rem;font-size:.78rem;color:var(--muted);pointer-events:none}
     .form-control,.form-select,.form-textarea{
       width:100%;
       padding:.75rem .9rem;
@@ -373,10 +375,11 @@
         <!-- Right Column: Pre-Session Intake Form -->
         <div class="right-col">
             <div class="form-card">
+                <!-- Change or deletion of the name attributes in the input tag will lead to empty values on record submission-->
                 <form action='https://forms.zohopublic.eu/cambridgeadvantage1/form/TheProfitClinic/formperma/xJUKJEpZ8e6vI7Xgji81Su5LI136vNhMY07Q9ccc7Ww/htmlRecords/submit' name='form' id='form' method='POST' accept-charset='UTF-8' enctype='multipart/form-data'>
-                    <input type="hidden" name="zf_referrer_name" value="">
-                    <input type="hidden" name="zf_redirect_url" value="https://cambridgeadvantage.zohobookings.eu/253745000000036045">
-                    <input type="hidden" name="zc_gad" value="">
+                    <input type="hidden" name="zf_referrer_name" value=""><!-- To Track referrals , place the referrer name within the " " in the above hidden input field -->
+                    <input type="hidden" name="zf_redirect_url" value=""><!-- To redirect to a specific page after record submission , place the respective url within the " " in the above hidden input field -->
+                    <input type="hidden" name="zc_gad" value=""><!-- If GCLID is enabled in Zoho CRM Integration, click details of AdWords Ads will be pushed to Zoho CRM -->
                     
                     <div class="form-header">
                         <h2 class="form-title">Pre-Session Diagnostic Brief</h2>
@@ -441,14 +444,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="form-label">4. Current Annual Revenue <em>*</em></label>
-                        <select name="Dropdown2" class="form-select" required>
-                            <option selected="true" value="-Select-">-Select-</option>
-                            <option value="Under £100k">Under £100k</option>
-                            <option value="£100k - £250k">£100k - £250k</option>
-                            <option value="£250k - £500k">£250k - £500k</option>
-                            <option value="£500k+">£500k+</option>
-                        </select>
+                        <label class="form-label">Annual Revenue <em>*</em></label>
+                        <div class="input-wrapper">
+                            <input type="text" name="Currency" maxlength="50" placeholder="" class="form-control" required />
+                            <span class="currency-symbol">USD</span>
+                        </div>
                     </div>
 
                     <div class="form-group">
