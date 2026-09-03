@@ -281,7 +281,7 @@ footer p{font-size:.78rem;color:var(--muted)}
 }
 
 /* ── COOKIE CONSENT ── */
-#cookie-consent-banner{position:fixed;bottom:0;left:0;right:0;z-index:999;background:#171717;border-top:1px solid var(--border);padding:1.2rem 4rem;display:none;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;font-family:'DM Sans',sans-serif;}
+#cookie-consent-banner{position:fixed;bottom:0;left:0;right:0;z-index:999;background:#171717;border-top:1px solid var(--border);padding:1.2rem 4rem;display:none;align-items:center;justify-between;gap:2rem;flex-wrap:wrap;font-family:'DM Sans',sans-serif;}
 #cookie-consent-banner.visible{display:flex}
 #cookie-consent-banner p{font-size:.82rem;color:#cfcabf;line-height:1.6;margin:0;max-width:640px}
 #cookie-consent-banner a{color:var(--gold);text-decoration:underline}
@@ -349,7 +349,61 @@ document.addEventListener('DOMContentLoaded', function() {
     <h1 style="font-size:3rem;max-width:700px;">How we help <br>you grow <em>profit</em></h1>
     <p class="hero-desc" style="max-width:640px;">Cambridge Advantage works across a range of core areas, each drawing on the same aim — removing the bottlenecks holding your business back and building a more profitable, sustainable enterprise. The areas below are a guide to how we typically help, not a fixed list — every engagement is shaped around what your business actually needs. Explore them below, or book a free breakthrough session to talk through your specific challenges.</p>
     <div class="btn-row" style="margin-top:1rem;">
-      <a class="btn-primary" href="https://forms.zohopublic.eu/cambridgeadvantage1/form/13ProfitLevers/formperma/9N75Ay8rwa-36HJHYp9v8SHWD832stVoXdUoR41RpEQ" target="_blank">GET YOUR "13 PROFIT LEVERS GUIDE" ↗</a>
+      <button class="btn-primary" id="zf_button_9N75Ay8rwa-36HJHYp9v8SHWD832stVoXdUoR41RpEQ">GET YOUR "13 PROFIT LEVERS GUIDE" ↗</button>
+      <script type="text/javascript">
+      (function() {
+        try {
+          var f = document.createElement("iframe");
+          f.src = 'https://forms.zohopublic.eu/cambridgeadvantage1/form/13ProfitLevers/formperma/9N75Ay8rwa-36HJHYp9v8SHWD832stVoXdUoR41RpEQ?zf_rsz_p=1';
+          f.style.border = "none";
+          f.style.height = "100%";
+          f.style.width = "100%";
+          f.style.transition = "all 0.5s ease";
+
+          var d = document.createElement("div");
+          d.id = "zf_div_9N75Ay8rwa-36HJHYp9v8SHWD832stVoXdUoR41RpEQ";
+          d.style.position = "fixed";
+          d.style.top = "0px";
+          d.style.left = "0px";
+          d.style.width = "100%";
+          d.style.height = "100%";
+          d.style.backgroundColor = "rgba(0,0,0,0.8)";
+          d.style.zIndex = "10000";
+          d.style.display = "none";
+
+          var c = document.createElement("div");
+          c.style.position = "absolute";
+          c.style.top = "10px";
+          c.style.right = "20px";
+          c.style.color = "#ffffff";
+          c.style.fontSize = "30px";
+          c.style.cursor = "pointer";
+          c.innerHTML = "&times;";
+          c.onclick = function() {
+            d.style.display = "none";
+          };
+
+          var container = document.createElement("div");
+          container.style.position = "relative";
+          container.style.width = "90%";
+          container.style.maxWidth = "700px";
+          container.style.height = "80%";
+          container.style.margin = "5% auto";
+          container.style.background = "#fff";
+          container.style.borderRadius = "4px";
+          container.style.overflow = "hidden";
+
+          container.appendChild(c);
+          container.appendChild(f);
+          d.appendChild(container);
+          document.body.appendChild(d);
+
+          document.getElementById("zf_button_9N75Ay8rwa-36HJHYp9v8SHWD832stVoXdUoR41RpEQ").addEventListener("click", function() {
+            d.style.display = "block";
+          });
+        } catch (e) {}
+      })();
+      </script>
     </div>
   </div>
 </section>
