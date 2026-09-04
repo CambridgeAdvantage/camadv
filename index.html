@@ -217,6 +217,7 @@
     <span></span><span></span><span></span>
   </button>
   <ul class="nav-links">
+    <li><a href="/">Home</a></li>
     <li><a href="services.html">Services</a></li>
     <li><a href="programs.html">Programs</a></li>
     <li><a href="sales-coaching.html">Sales Coaching</a></li>
@@ -390,8 +391,8 @@ function toggleMenu(btn) {
   btn.setAttribute('aria-expanded', open);
 }
 
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(a => {
+// Smooth scroll for anchor links (excluding root/empty hash links)
+document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(a => {
   a.addEventListener('click', e => {
     const target = document.querySelector(a.getAttribute('href'));
     if (target) {
