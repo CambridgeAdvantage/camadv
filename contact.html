@@ -45,6 +45,7 @@ nav{
 .nav-links{list-style:none;display:flex;gap:clamp(.75rem,1.55vw,2rem);align-items:center}
 .nav-links a{text-decoration:none;color:var(--muted);font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;transition:color .2s}
 .nav-links a:hover{color:var(--gold)}
+.nav-links a.active{color:var(--gold)}
 .nav-cta{background:var(--gold)!important;color:var(--navy)!important;padding:.5rem 1.2rem;border-radius:2px;font-weight:500!important;transition:background .2s!important}
 .nav-cta:hover{background:var(--gold-light)!important;color:var(--navy)!important}
 .nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:42px;height:42px;background:none;border:1px solid var(--border);border-radius:3px;cursor:pointer;padding:0 9px}
@@ -359,9 +360,9 @@ document.addEventListener('DOMContentLoaded', function() {
     <li><a href="programs.html">Programs</a></li>
     <li><a href="sales-coaching.html">Sales Coaching</a></li>
     <li><a href="how-we-work.html">How We Work</a></li>
-    <li><a href="events.html">Events</a></li>
+    <li><a href="resources.html">Resources</a></li>
     <li><a href="blog.html">Blog</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
     <li><a href="index.html#get-started" class="nav-cta">Free Session</a></li>
   </ul>
 </nav>
