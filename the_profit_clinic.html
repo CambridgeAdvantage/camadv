@@ -426,7 +426,7 @@
 
                     <div class="form-group">
                         <label class="form-label">Website <em>*</em></label>
-                        <input type="text" maxlength="2083" name="Website" value="" placeholder="" class="form-control" required />
+                        <input type="text" maxlength="2083" name="Website" value="" placeholder="e.g. yourcompany.com" pattern="^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$" title="Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)" class="form-control" required />
                     </div>
 
                     <div class="form-group">
@@ -459,7 +459,7 @@
                     <div class="form-group">
                         <label class="form-label">Annual Revenue <em>*</em></label>
                         <div class="input-wrapper">
-                            <input type="text" name="Currency" maxlength="50" placeholder="" class="form-control" required />
+                            <input type="text" name="Currency" maxlength="50" placeholder="" class="form-control" inputmode="numeric" pattern="[0-9]+" title="Please enter numbers only" onkeypress="return /[0-9]/.test(event.key)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required />
                             <span class="currency-symbol">USD</span>
                         </div>
                     </div>
