@@ -934,6 +934,23 @@ document.getElementById('webform235942000001035027').addEventListener('submit', 
     return false;
   }
 
+  var websiteField = document.getElementById('Website');
+  var domainPattern = /^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$/;
+  if (websiteField && !domainPattern.test(websiteField.value.trim())) {
+    alert('Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)');
+    websiteField.focus();
+    e.preventDefault();
+    return false;
+  }
+
+  var revenueField = document.getElementById('Annual_Revenue');
+  if (revenueField && !/^[0-9]+$/.test(revenueField.value.trim())) {
+    alert('Annual Revenue must contain numbers only.');
+    revenueField.focus();
+    e.preventDefault();
+    return false;
+  }
+
   if(typeof _wfa_track !== 'undefined' && _wfa_track.wfa_submit) {
     _wfa_track.wfa_submit(e);
   }

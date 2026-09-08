@@ -533,6 +533,14 @@ document.getElementById('levers-modal').addEventListener('click', function(e) {
 document.getElementById('form').addEventListener('submit', function(e) {
   e.preventDefault();
 
+  var websiteField = this.querySelector('[name="Website"]');
+  var domainPattern = /^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$/;
+  if (websiteField && !domainPattern.test(websiteField.value.trim())) {
+    alert('Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)');
+    websiteField.focus();
+    return false;
+  }
+
   var btn = document.getElementById('submitLeversBtn');
   btn.textContent = "Processing...";
   btn.disabled = true;

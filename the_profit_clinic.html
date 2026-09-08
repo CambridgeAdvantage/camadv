@@ -548,6 +548,22 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 document.getElementById('form').addEventListener('submit', function(e) {
   e.preventDefault();
   const form = this;
+
+  const domainPattern = /^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$/;
+  const websiteField = form.querySelector('[name="Website"]');
+  if (websiteField && !domainPattern.test(websiteField.value.trim())) {
+    alert('Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)');
+    websiteField.focus();
+    return false;
+  }
+
+  const revenueField = form.querySelector('[name="Currency"]');
+  if (revenueField && !/^[0-9]+$/.test(revenueField.value.trim())) {
+    alert('Annual Revenue must contain numbers only.');
+    revenueField.focus();
+    return false;
+  }
+
   const submitBtn = form.querySelector('.btn-submit');
   if (submitBtn) {
     submitBtn.disabled = true;

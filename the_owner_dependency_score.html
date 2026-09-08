@@ -653,6 +653,14 @@ function getBand(score){
 function handleSubmit(e){
   e.preventDefault();
 
+  const websiteInput = document.getElementById('website');
+  const domainPattern = /^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$/;
+  if (websiteInput && !domainPattern.test(websiteInput.value.trim())) {
+    alert('Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)');
+    websiteInput.focus();
+    return false;
+  }
+
   const submitBtn = document.getElementById('submitBtn');
   const formError = document.getElementById('formError');
   formError.style.display = 'none';
