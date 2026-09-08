@@ -230,6 +230,9 @@ h1 em{font-style:italic;font-weight:400;color:var(--gold)}
 }
 
 .zcwf_row{margin-bottom:1.2rem;}
+.field-error{color:var(--gold-light);font-size:.78rem;margin-top:.5rem;display:none;font-family:'DM Sans',sans-serif;}
+.field-error.show{display:block;}
+.zcwf_col_fld input.invalid{border-color:var(--gold-light) !important;}
 .zcwf_col_lab{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;display:block;}
 .zcwf_col_fld input[type=text], .zcwf_col_fld .zcwf_col_fld_slt{
   width:100% !important;
@@ -423,7 +426,6 @@ footer p{font-size:.78rem;color:var(--muted)}
 <!-- ── ZOHO LEAD CAPTURE MODAL ── -->
 <div class="modal-overlay" id="lead-modal">
   <div class="modal-box">
-    <button type="button" class="modal-close" id="lead-modal-close" aria-label="Close" onclick="document.getElementById('lead-modal').classList.remove('show')">&times;</button>
     <div class="modal-title">Your Diagnosis is Ready</div>
     <div class="modal-sub">Enter your details below to instantly unlock your Profit Readiness Score and custom lever breakdown.</div>
     
@@ -484,14 +486,16 @@ footer p{font-size:.78rem;color:var(--muted)}
       <div class="zcwf_row">
         <div class="zcwf_col_lab"><label for="Website">Website <span style="color:red;">*</span></label></div>
         <div class="zcwf_col_fld">
-          <input type="text" id="Website" aria-required="true" aria-label="Website" name="Website" aria-valuemax="255" maxlength="255" placeholder="e.g. yourcompany.com" pattern="^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$" title="Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)" required>
+          <input type="text" id="Website" aria-required="true" aria-label="Website" name="Website" aria-valuemax="255" maxlength="255" placeholder="e.g. yourcompany.com" required>
+          <div class="field-error" id="WebsiteError">Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)</div>
         </div>
       </div>
 
       <div class="zcwf_row">
         <div class="zcwf_col_lab"><label for="Annual_Revenue">Annual Revenue <span style="color:red;">*</span></label></div>
         <div class="zcwf_col_fld">
-          <input type="text" id="Annual_Revenue" aria-required="true" aria-label="Annual Revenue" name="Annual Revenue" aria-valuemax="16" maxlength="16" inputmode="numeric" pattern="[0-9]+" title="Please enter numbers only" onkeypress="return /[0-9]/.test(event.key)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
+          <input type="text" id="Annual_Revenue" aria-required="true" aria-label="Annual Revenue" name="Annual Revenue" aria-valuemax="16" maxlength="16" inputmode="numeric" placeholder="e.g. 250000 (GBP)" onkeypress="return /[0-9]/.test(event.key)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required>
+          <div class="field-error" id="Annual_RevenueError">Annual Revenue must contain numbers only.</div>
         </div>
       </div>
 
@@ -926,6 +930,15 @@ function captchaFailedHandling235942000001035027(message){
   }
 }
 
+document.getElementById('Website').addEventListener('input', function(){
+  this.classList.remove('invalid');
+  document.getElementById('WebsiteError').classList.remove('show');
+});
+document.getElementById('Annual_Revenue').addEventListener('input', function(){
+  this.classList.remove('invalid');
+  document.getElementById('Annual_RevenueError').classList.remove('show');
+});
+
 document.getElementById('webform235942000001035027').addEventListener('submit', function(e){
   var ismandatory = checkMandatory235942000001035027(true);
   
@@ -935,20 +948,30 @@ document.getElementById('webform235942000001035027').addEventListener('submit', 
   }
 
   var websiteField = document.getElementById('Website');
+  var websiteError = document.getElementById('WebsiteError');
   var domainPattern = /^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$/;
   if (websiteField && !domainPattern.test(websiteField.value.trim())) {
-    alert('Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)');
+    websiteField.classList.add('invalid');
+    websiteError.classList.add('show');
     websiteField.focus();
     e.preventDefault();
     return false;
+  } else if (websiteField) {
+    websiteField.classList.remove('invalid');
+    websiteError.classList.remove('show');
   }
 
   var revenueField = document.getElementById('Annual_Revenue');
+  var revenueError = document.getElementById('Annual_RevenueError');
   if (revenueField && !/^[0-9]+$/.test(revenueField.value.trim())) {
-    alert('Annual Revenue must contain numbers only.');
+    revenueField.classList.add('invalid');
+    revenueError.classList.add('show');
     revenueField.focus();
     e.preventDefault();
     return false;
+  } else if (revenueField) {
+    revenueField.classList.remove('invalid');
+    revenueError.classList.remove('show');
   }
 
   if(typeof _wfa_track !== 'undefined' && _wfa_track.wfa_submit) {

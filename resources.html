@@ -242,6 +242,9 @@
     }
     .form-row { display: flex; gap: 1rem; }
     .form-row .form-group { flex: 1; }
+    .field-error{color:var(--gold-light);font-size:.78rem;margin-top:.5rem;display:none;}
+    .field-error.show{display:block;}
+    .form-group input.invalid{border-color:var(--gold-light) !important;}
 
     /* ── CTA & FOOTER ── */
     /* Matched Get Started Section Background to #2f2f2f without nested card box */
@@ -418,7 +421,8 @@
 
         <div class="form-group">
           <label>Website <em>*</em></label>
-          <input type="text" maxlength="2083" name="Website" placeholder="e.g. yourcompany.com" pattern="^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$" title="Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)" required />
+          <input type="text" maxlength="2083" name="Website" id="leversWebsite" placeholder="e.g. yourcompany.com" />
+          <div class="field-error" id="leversWebsiteError">Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)</div>
         </div>
 
         <div style="margin-top: 1rem; margin-bottom: 1.5rem;">
@@ -530,15 +534,25 @@ document.getElementById('levers-modal').addEventListener('click', function(e) {
 });
 
 // Async Background Lead Capture & Clean Direct Blob Download (No HTML Flash)
+document.getElementById('leversWebsite').addEventListener('input', function(){
+  this.classList.remove('invalid');
+  document.getElementById('leversWebsiteError').classList.remove('show');
+});
+
 document.getElementById('form').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  var websiteField = this.querySelector('[name="Website"]');
+  var websiteField = document.getElementById('leversWebsite');
+  var websiteError = document.getElementById('leversWebsiteError');
   var domainPattern = /^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$/;
   if (websiteField && !domainPattern.test(websiteField.value.trim())) {
-    alert('Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)');
+    websiteField.classList.add('invalid');
+    websiteError.classList.add('show');
     websiteField.focus();
     return false;
+  } else if (websiteField) {
+    websiteField.classList.remove('invalid');
+    websiteError.classList.remove('show');
   }
 
   var btn = document.getElementById('submitLeversBtn');

@@ -236,6 +236,9 @@
     .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
     .form-note{font-family:'DM Sans',sans-serif;font-size:.74rem;color:var(--muted);line-height:1.6;margin-top:1.2rem}
     .form-error{font-family:'DM Sans',sans-serif;color:var(--gold-light);font-size:.8rem;margin-top:.6rem;display:none}
+    .field-error{font-family:'DM Sans',sans-serif;color:var(--gold-light);font-size:.78rem;margin-top:.5rem;display:none}
+    .field-error.show{display:block}
+    .form-group input.invalid{border-color:var(--gold-light) !important;}
 
     /* results */
     .result-score{font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:300;color:var(--gold);line-height:1;margin-bottom:.3rem}
@@ -382,7 +385,8 @@
           </div>
           <div class="form-group">
             <label for="website">Website *</label>
-            <input type="text" id="website" required placeholder="example.com" autocomplete="url" pattern="^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$" title="Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)">
+            <input type="text" id="website" placeholder="example.com" autocomplete="url">
+            <div class="field-error" id="websiteError">Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)</div>
           </div>
 
           <button class="btn-primary" type="submit" id="submitBtn" style="width:100%;margin-top:.5rem;">Reveal My Score ↘</button>
@@ -650,15 +654,25 @@ function getBand(score){
 }
 
 /* ── Lead submission to Zoho Forms ── */
+document.getElementById('website').addEventListener('input', function(){
+  this.classList.remove('invalid');
+  document.getElementById('websiteError').classList.remove('show');
+});
+
 function handleSubmit(e){
   e.preventDefault();
 
   const websiteInput = document.getElementById('website');
+  const websiteError = document.getElementById('websiteError');
   const domainPattern = /^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$/;
   if (websiteInput && !domainPattern.test(websiteInput.value.trim())) {
-    alert('Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)');
+    websiteInput.classList.add('invalid');
+    websiteError.classList.add('show');
     websiteInput.focus();
     return false;
+  } else if (websiteInput) {
+    websiteInput.classList.remove('invalid');
+    websiteError.classList.remove('show');
   }
 
   const submitBtn = document.getElementById('submitBtn');

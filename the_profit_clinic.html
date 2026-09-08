@@ -205,6 +205,9 @@
     .form-label{display:block;font-family:'DM Sans',sans-serif;font-size:.78rem;font-weight:500;color:#fff;letter-spacing:.02em;margin-bottom:.45rem}
     .form-label em, .req{color:var(--gold);font-style:normal}
     .form-hint{display:block;font-family:'DM Sans',sans-serif;font-weight:400;font-size:.72rem;color:var(--muted);margin-top:.2rem}
+    .field-error{color:var(--gold-light);font-size:.78rem;margin-top:.5rem;display:none;}
+    .field-error.show{display:block;}
+    .form-control.invalid{border-color:var(--gold-light) !important;}
     .input-wrapper{position:relative;display:flex;align-items:center}
     .currency-symbol{position:absolute;right:1rem;font-size:.78rem;color:var(--muted);pointer-events:none}
     .form-control,.form-select,.form-textarea{
@@ -426,7 +429,8 @@
 
                     <div class="form-group">
                         <label class="form-label">Website <em>*</em></label>
-                        <input type="text" maxlength="2083" name="Website" value="" placeholder="e.g. yourcompany.com" pattern="^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$" title="Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)" class="form-control" required />
+                        <input type="text" maxlength="2083" name="Website" id="clinicWebsite" value="" placeholder="e.g. yourcompany.com" class="form-control" />
+                        <div class="field-error" id="clinicWebsiteError">Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)</div>
                     </div>
 
                     <div class="form-group">
@@ -459,9 +463,10 @@
                     <div class="form-group">
                         <label class="form-label">Annual Revenue <em>*</em></label>
                         <div class="input-wrapper">
-                            <input type="text" name="Currency" maxlength="50" placeholder="" class="form-control" inputmode="numeric" pattern="[0-9]+" title="Please enter numbers only" onkeypress="return /[0-9]/.test(event.key)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" required />
-                            <span class="currency-symbol">USD</span>
+                            <input type="text" name="Currency" id="clinicRevenue" maxlength="50" placeholder="" class="form-control" inputmode="numeric" onkeypress="return /[0-9]/.test(event.key)" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+                            <span class="currency-symbol">GBP</span>
                         </div>
+                        <div class="field-error" id="clinicRevenueError">Annual Revenue must contain numbers only.</div>
                     </div>
 
                     <div class="form-group">
@@ -545,23 +550,42 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 </script>
 
 <script type="ad09e51c6d5e3588a977ab75-text/javascript">
+document.getElementById('clinicWebsite').addEventListener('input', function(){
+  this.classList.remove('invalid');
+  document.getElementById('clinicWebsiteError').classList.remove('show');
+});
+document.getElementById('clinicRevenue').addEventListener('input', function(){
+  this.classList.remove('invalid');
+  document.getElementById('clinicRevenueError').classList.remove('show');
+});
+
 document.getElementById('form').addEventListener('submit', function(e) {
   e.preventDefault();
   const form = this;
 
   const domainPattern = /^(?:https?:\/\/)?(?:www\.)?[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+(?:\/.*)?$/;
-  const websiteField = form.querySelector('[name="Website"]');
+  const websiteField = document.getElementById('clinicWebsite');
+  const websiteError = document.getElementById('clinicWebsiteError');
   if (websiteField && !domainPattern.test(websiteField.value.trim())) {
-    alert('Please enter a valid website domain (e.g. yourcompany.com, yourcompany.co.uk)');
+    websiteField.classList.add('invalid');
+    websiteError.classList.add('show');
     websiteField.focus();
     return false;
+  } else if (websiteField) {
+    websiteField.classList.remove('invalid');
+    websiteError.classList.remove('show');
   }
 
-  const revenueField = form.querySelector('[name="Currency"]');
+  const revenueField = document.getElementById('clinicRevenue');
+  const revenueError = document.getElementById('clinicRevenueError');
   if (revenueField && !/^[0-9]+$/.test(revenueField.value.trim())) {
-    alert('Annual Revenue must contain numbers only.');
+    revenueField.classList.add('invalid');
+    revenueError.classList.add('show');
     revenueField.focus();
     return false;
+  } else if (revenueField) {
+    revenueField.classList.remove('invalid');
+    revenueError.classList.remove('show');
   }
 
   const submitBtn = form.querySelector('.btn-submit');
